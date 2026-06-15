@@ -192,7 +192,7 @@ Expanding to include $v_3$: $f_i = a_i + b_{2i}\cos(2\Delta\phi_i) + b_{3i}\cos(
 
 ### All-Plane
 
-Raw same-event data (a) → after flat background subtraction (b) → final cleaned correlation (c):
+Illustrating the per-$\pi^0$ trigger yield background subtraction in an example $p_T$ and centrality bin (all-plane). The subtraction flows from **(a) → (c)**. Functions to be subtracted are drawn as well as the resulting uncertainty. The raw yield is introduced in **(a)** and the subtraction follows through **(c)** where the final result is presented. Each plot features a background term (described in the legend) that is subtracted before the drawing of the subsequent plot. The measured terms do well to describe much of the shape and reveal a typical near/away-side correlation.
 
 <p align="center">
   <img src="figures/allplane_a.png" width="30%" />
@@ -202,7 +202,7 @@ Raw same-event data (a) → after flat background subtraction (b) → final clea
 
 ### In-Plane
 
-Five-step subtraction for triggers aligned with the reaction plane:
+The subtraction flows from **(a) → (e)**. The raw yield is introduced in **(a)** and the subtraction follows through **(e)** where the final result is presented. Each plot features a background term (described in the legend) that is subtracted before the drawing of the subsequent plot. A flip in sign of the lesser flat term $4 \kappa_{ht} \langle a_h\rangle\langle b_t\sigma\rangle$ and the dominant cosine term $4 \kappa_{th} \langle a_t\rangle\langle b_h\sigma\rangle$ is required between the in and out-of-plane subtractions.
 
 <p align="center">
   <img src="figures/inplane_a.png" width="18%" />
@@ -214,7 +214,7 @@ Five-step subtraction for triggers aligned with the reaction plane:
 
 ### Out-of-Plane
 
-Five-step subtraction for triggers perpendicular to the reaction plane:
+The subtraction flows from **(a) → (e)**. The measured terms do well to describe much of the shape and reveal a typical near/away-side correlation.
 
 <p align="center">
   <img src="figures/outplane_a.png" width="18%" />
