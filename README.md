@@ -1,6 +1,17 @@
-# Removal of Anisotropic Background from Neutral Pion and Tagged Direct Photon - Hadron Correlations of Au+Au 200 GeV Collisions
+# Photon–Hadron Correlation Analysis Framework
 
-Novel background removal method using reaction-plane-dependent event mixing that eliminates anisotropic flow ($v_2$) contamination without relying on external $v_2$ measurements. $v_3$ contributions are handled analytically via integration limits. Applied to $\pi^0$-hadron and direct photon-hadron correlations in 20 billion Au+Au events at $\sqrt{s_{NN}} = 200$ GeV recorded by PHENIX at RHIC. Direct photon triggers obtained via a hybrid tagging method (inclusive $\gamma$ minus $\pi^0$-tagged decay $\gamma$), overcoming the statistical limitations of pure tagging. Results: path-length-dependent partonic energy loss observed in both $\pi^0$ and direct photon channels; away-side hadron $v_2$ extracted from in/out-of-plane comparisons; central-to-mid-central suppression ratios constrain medium properties.
+Analysis framework for two-particle correlation measurements in heavy ion collisions. Implements reaction-plane-dependent event mixing for flow background removal, neutral pion reconstruction via invariant mass, and direct photon isolation through decay tagging. Used to measure path-length-dependent jet quenching in 200 GeV Au+Au collisions at RHIC.
+
+**Contents**
+
+- [Physics Context](#physics-context)
+- [Experiment and Data](#experiment-and-data)
+- [Background Removal: Full Derivation](#background-removal-full-derivation)
+- [Neutral Pion - Hadron Correlations](#neutral-pion---hadron-correlations)
+- [Direct Photon Tagging](#direct-photon-tagging)
+- [Direct Photon - Hadron Correlations](#direct-photon---hadron-correlations)
+- [Discussion](#discussion)
+- [Code Structure](#code-structure)
 
 ---
 
@@ -244,13 +255,9 @@ $$n_{th} = 2\pi a_t a_h \left(1 + 2 \sum_{n=2}^{\infty} v_{tn} v_{hn} \cos(n\Del
 
 Using $v_3$ estimates from previously published PHENIX results, the $\cos(3\Delta\phi)$ contribution is well described. By integrating the away-side yield over $2\pi/3 < \Delta\phi < \pi$, the $v_3$ contribution is completely removed. This motivates the choice of integration limits throughout the analysis.
 
-### Per-Trigger Yield Results
+### Results
 
-Per-trigger $\pi^0$ - $h$ yields from 0--60% Au+Au at $\sqrt{s_{NN}} = 200$ GeV are produced for four trigger $p_T$ bins ($5-7$, $7-9$, $9-12$, $12-15$ GeV) and three $\xi$ bins ($0-0.8$, $0.8-1.6$, $1.6-2.4$). The near side amplitude is larger than the away side's, consistent with the $\pi^0$'s surface bias. Away-side yields increase with trigger $p_T$; shapes broaden at higher $\xi$ as partons fragment to lower momenta. The results are consistent with PHENIX preliminary results.
-
-### Integrated Away-Side Yields and Centrality Comparison
-
-Integrated away-side yields ($2\pi/3 < \Delta\phi \leq \pi$), when plotted as a function of $\xi$, lie along an exponential curve common to all trigger $p_T$, indicating that the fractional momentum distribution of away-side hadrons is largely independent of the trigger momentum. The ratio of central (0--20%) to mid-central (20--60%) integrated away-side yields reveals a significant suppression in central events. A linear fit suggests a near constant effect in $\xi$ and a slightly decreasing suppression at higher $p_{Tt}$.
+Per-trigger $\pi^0$ - $h$ yields from 0--60% Au+Au at $\sqrt{s_{NN}} = 200$ GeV are produced for four trigger $p_T$ bins and three $\xi$ bins, consistent with PHENIX preliminary results. The ratio of central (0--20%) to mid-central (20--60%) integrated away-side yields reveals a significant suppression, indicating path-length-dependent energy loss.
 
 ### Reaction Plane Dependence and Away-Side $v_2$
 
@@ -262,15 +269,15 @@ and taking the ratio of in/out-of-plane to all-plane yields before integration r
 
 $$\frac{Y^+(\Delta\phi) - Y^-(\Delta\phi)}{Y(\Delta\phi)} = \frac{16\sigma\, v_{2a} \cos(2\Delta\phi) (a_t^2 - b_t^2)}{\pi (a_t^2 - 4\sigma^2 b_t^2/\pi^2)(1 + 4 v_{2a} b_t \cos(2\Delta\phi) / a_t)}$$
 
-For small trigger $v_2$ (admitting ~5% uncertainty):
+For small trigger $v_2$:
 
 $$\frac{\pi}{16\sigma} \frac{Y^+(\Delta\phi) - Y^-(\Delta\phi)}{Y(\Delta\phi)} \approx v_{2a} \cos(2\Delta\phi)$$
 
-A zoom into the away-side ($\pi/2 < \Delta\phi \leq \pi$) is fit with $v_{2a} \cos(2\Delta\phi)$. A positive away-side $v_2$ is measured for all $\xi$ bins, indicating that in-plane hadrons (shorter path through the medium) are enhanced relative to out-of-plane (longer path). The effect decreases at higher trigger $p_T$, consistent with the centrality comparison suggesting that higher momentum particles are less affected by the medium.
-
-For integrated yields rather than full $\Delta\phi$ distributions, the shape of $Y(\Delta\phi)$ is approximated by considering two extreme cases (delta function and cosine), yielding:
+For integrated yields rather than full $\Delta\phi$ distributions:
 
 $$\frac{\pi}{16\sigma} \frac{\int_{2\pi/3}^{\pi} Y^+(\Delta\phi) - \int_{2\pi/3}^{\pi} Y^-(\Delta\phi)}{(0.75 \pm 0.1) \int_{2\pi/3}^{\pi} Y(\Delta\phi)} = v_{2a}$$
+
+A positive away-side $v_2$ is measured for all $\xi$ bins, decreasing at higher trigger $p_T$.
 
 ### Systematic Errors
 
@@ -342,21 +349,13 @@ where $N_{\text{dir}}$ and $N_{\text{dec}}$ are obtained from the tagging method
 
 ### Results
 
-This subtraction method yields substantially higher statistical precision than the pure tagging method. The direct photon triggered integrated away-side yield in 0--60% collisions is in good agreement with the previously published PHENIX result (PPG210). The ratio of central (0--20%) to mid-central (20--60%) yields reveals an approximately constant suppression as a function of trigger $p_T$ and $\xi$, several sigma from unity. This contrasts with the $I_{AA}$ measurement (central/p+p) which shows an enhancement at lower momenta, though nuclear effects that may affect $I_{AA}$ could cancel in the A+A/A+A ratio.
-
-### Away-Side $v_2$ of Direct Photon Triggered Hadrons
-
-Using the integrated form of the $v_2$ extraction, the away-side $v_2$ of hadrons associated with direct photon triggers is measured. The result is consistent with zero but hints at a possible positive $v_2$. The statistical precision is greater than the pure tagging method.
+The direct photon triggered integrated away-side yield in 0--60% collisions is consistent with PHENIX PPG210. The ratio of central to mid-central yields reveals a several-sigma suppression, approximately constant in $\xi$ and $p_T$. The away-side $v_2$ of hadrons associated with direct photon triggers is consistent with zero, with improved statistical precision over the pure tagging method.
 
 ---
 
 ## Discussion
 
-The background subtraction method has been implemented successfully. Produced per-trigger $\pi^0$ - $h$ yields are consistent with the most recent PHENIX result, supporting the validity of the new method. A stark benefit is the lack of need for external $v_2$ measurements — all $v_2$-dependent backgrounds are accounted for by the reaction-plane-binned event mixing procedure. Background contributions from $v_3$ are avoided by introducing appropriate integration limits on the away-side yield.
-
-Together, the ratio of central to mid-central integrated away-side yields and the away-side $v_2$ measurement overwhelmingly suggest a **path length dependent energy loss** of partons in the QGP medium. The suppression observed in $\pi^0$ triggered and direct photon triggered hadrons is roughly the same, despite the naive expectation that $\pi^0$ triggers would exhibit greater suppression due to surface bias and gluonic away-side jets. The away-side $v_2$ measurements developed in this analysis help elucidate the role of collision geometry in this phenomenon.
-
-The techniques developed here have been successfully used to measure energy loss in the quark-gluon plasma. Together with sPHENIX — an upgrade of PHENIX that will measure $\gamma$ - $h$ and $\gamma$ - jet correlations with greater precision due to a larger acceptance and data rate — they can help to further reveal properties of the QGP.
+The method requires no external $v_2$ measurements — all flow-dependent backgrounds are handled by the reaction-plane-binned event mixing. $v_3$ is eliminated via integration limits. Results are consistent with published PHENIX measurements, validating the approach. Central-to-mid-central suppression and positive away-side $v_2$ point to path-length-dependent energy loss in the QGP. The suppression is similar for $\pi^0$ and direct photon triggers despite differing surface bias and parent parton composition.
 
 ---
 
