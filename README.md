@@ -79,7 +79,7 @@ $$
 \kappa_a = \frac{\langle a_t a_h\rangle}{\langle a_t\rangle\langle a_h\rangle}
 $$
 
-Compute by estimating $a_t(N_\text{part})$ and $a_h(N_\text{part})$: plot per-centrality $\langle a_i\rangle$ vs $\langle N_\text{part}\rangle$, interpolate with cubic spline, integrate over $h(N_\text{part})$. Typical $\kappa_a = 1.01-1.05$.
+Compute by estimating $a_t(N_\text{part})$ and $a_h(N_\text{part})$: plot per-centrality $\langle a_i\rangle$ vs $\langle N_\text{part}\rangle$, interpolate with cubic spline, integrate over $h(N_\text{part})$. Typically $\kappa_a \approx 1$.
 
 After flat subtraction: $F_{th} - \kappa_a E_{th} = 2\pi \langle b_t b_h\rangle \cos(2\Delta\phi)$ — only the cosine term remains.
 
