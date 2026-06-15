@@ -1,6 +1,6 @@
 # Photon–Hadron Correlation Analysis Framework
 
-Analysis framework for two-particle correlation measurements in heavy ion collisions. Implements reaction-plane-dependent event mixing for flow background removal, neutral pion reconstruction via invariant mass, and direct photon isolation through decay tagging. Used to measure path-length-dependent jet quenching in 200 GeV Au+Au collisions at RHIC.
+A reaction-plane-dependent event mixing method that measures and removes the collective background from two-particle correlations without any external flow measurements — elliptic flow ($v_2$) is determined from the same data via sub-event resolution and a four-parameter $\kappa$ correction framework. Triangular flow ($v_3$) contributions are eliminated analytically through the choice of integration limits. An in/out-of-plane decomposition extracts the away-side hadron $v_2$, isolating the geometry dependence of partonic energy loss. A hybrid tagging method (inclusive $\gamma$ minus $\pi^0$-tagged decay $\gamma$) overcomes the statistical limitations of pure decay-photon tagging, enabling statistically significant direct photon-hadron correlation measurements.
 
 **Contents**
 
