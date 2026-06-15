@@ -85,23 +85,23 @@ After flat subtraction: $F_{th} - \kappa_a E_{th} = 2\pi \langle b_t b_h\rangle 
 
 ### 4. Reaction Plane Resolution
 
-The measured reaction plane $\psi_{2}^{*}$ differs from the true $\psi_2$. The conditional distribution is a Gaussian periodic in $\pi$:
+The measured reaction plane $\psi_{2}^{\ast}$ differs from the true $\psi_2$. The conditional distribution is a Gaussian periodic in $\pi$:
 
 $$
-g(\psi_2-\psi_{2}^{*}) = \frac{1}{\sqrt{2\pi\omega^2}} \sum_k \exp\!\left(-\frac{(\psi_2-\psi_{2}^{*}+k\pi)^2}{2\omega^2}\right)
+g(\psi_2-\psi_{2}^{\ast}) = \frac{1}{\sqrt{2\pi\omega^2}} \sum_k \exp\left(-\frac{(\psi_2-\psi_{2}^{\ast}+k\pi)^2}{2\omega^2}\right)
 $$
 
 Convolving damps the flow coefficient by the resolution $\sigma = e^{-2\omega^2}$:
 
 $$
-f_{i}^{*} = \int g(\psi_2-\psi_{2}^{*})\, f_i\, d\psi_2 = a_i + \sigma b_i \cos\bigl(2(\phi_i - \psi_{2}^{*})\bigr)
+f_{i}^{\ast} = \int g(\psi_2-\psi_{2}^{\ast})\, f_i\, d\psi_2 = a_i + \sigma b_i \cos\bigl(2(\phi_i - \psi_{2}^{\ast})\bigr)
 $$
 
 $\sigma$ is measured from the correlation between independent sub-detectors: $\sigma = \sqrt{\langle\cos(2(\psi_N-\psi_S))\rangle}$.
 
 ### 5. Reaction-Plane Binned Mixing — Measuring the Cosine Term
 
-Mix triggers with hadrons whose measured $\psi_{2}^{*}$ is within $\varepsilon$ of the trigger's. Restricting $\psi_{2h}^{*}$ to $[\psi_{2t}^{*}-\varepsilon,\ \psi_{2t}^{*}+\varepsilon]$ preserves the flow correlation:
+Mix triggers with hadrons whose measured $\psi_{2}^{\ast}$ is within $\varepsilon$ of the trigger's. Restricting $\psi_{2h}^{\ast}$ to $[\psi_{2t}^{\ast}-\varepsilon,\ \psi_{2t}^{\ast}+\varepsilon]$ preserves the flow correlation:
 
 $$
 E_{th}^{\psi} = 4\pi \langle a_t\rangle\langle a_h\rangle + 2\pi \langle\sigma b_t\rangle\langle\sigma b_h\rangle \cos(2\Delta\phi)
@@ -126,7 +126,7 @@ $$
 Restrict triggers to those aligned with (in-plane) or perpendicular to (out-of-plane) the reaction plane:
 
 $$
-\psi_{2\pm}^{*}(\phi_t) = \phi_t + \alpha \pm \frac{\pi}{4}, \qquad \alpha \in \{0\ (\text{in}),\ \pi/2\ (\text{out})\}
+\psi_{2\pm}^{\ast}(\phi_t) = \phi_t + \alpha \pm \frac{\pi}{4}, \qquad \alpha \in \{0\ (\text{in}),\ \pi/2\ (\text{out})\}
 $$
 
 The same-event backgrounds:
@@ -163,13 +163,13 @@ All four $\kappa$ corrections applied:
 **All-plane:**
 
 $$
-F_{th}^{*} = 4\pi\, \kappa_a \langle a_t\rangle\langle a_h\rangle + \frac{2\pi\, \kappa_b \langle\sigma b_t\rangle\langle\sigma b_h\rangle}{\langle\sigma\rangle^2} \cos(2\Delta\phi)
+F_{th}^{\ast} = 4\pi\, \kappa_a \langle a_t\rangle\langle a_h\rangle + \frac{2\pi\, \kappa_b \langle\sigma b_t\rangle\langle\sigma b_h\rangle}{\langle\sigma\rangle^2} \cos(2\Delta\phi)
 $$
 
 **In/out-of-plane:**
 
 $$
-F_{th}^{\pm*} = 2\pi\, \kappa_a \langle a_t\rangle\langle a_h\rangle \pm 4\kappa_{ht} \langle a_h\rangle\langle b_t\sigma\rangle + \left(\frac{\pi\, \kappa_b \langle\sigma b_t\rangle\langle\sigma b_h\rangle}{\langle\sigma\rangle^2} \pm 4\kappa_{th} \langle a_t\rangle\langle b_h\sigma\rangle\right) \cos(2\Delta\phi)
+F_{th}^{\pm\ast} = 2\pi\, \kappa_a \langle a_t\rangle\langle a_h\rangle \pm 4\kappa_{ht} \langle a_h\rangle\langle b_t\sigma\rangle + \left(\frac{\pi\, \kappa_b \langle\sigma b_t\rangle\langle\sigma b_h\rangle}{\langle\sigma\rangle^2} \pm 4\kappa_{th} \langle a_t\rangle\langle b_h\sigma\rangle\right) \cos(2\Delta\phi)
 $$
 
 ### 9. Final Subtraction
