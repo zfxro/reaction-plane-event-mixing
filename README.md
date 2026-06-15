@@ -200,6 +200,13 @@ $$Y(\Delta\phi) = \frac{Y_{\text{same}}(\Delta\phi) - \kappa_a Y_{\text{mix}}(\D
 
 where $A(\Delta\phi) = Y_{\text{mix}}(\Delta\phi) / n_{h,\text{exp}}$ is the acceptance function derived from previously published charged hadron yields.
 
+<p align="center">
+  <img src="figures/dphi_pi0_ptt0_sumcent1_dpsi0_xi0_a.pdf" width="32%" />
+  <img src="figures/dphi_pi0_ptt0_sumcent1_dpsi0_xi0_b.pdf" width="32%" />
+  <img src="figures/dphi_pi0_ptt0_sumcent1_dpsi0_xi0_c.pdf" width="32%" />
+</p>
+**Figure 1:** Background subtraction sequence for $\pi^0 - h$ correlations (mid-central 20--60%, $p_{Tt} > 5$ GeV, $\xi = [0.5, 1.0]$). Left: same-event data with flat background overlaid. Center: after flat subtraction with cosine background overlaid. Right: final result.
+
 ---
 
 ## Neutral Pion - Hadron Correlations
@@ -257,7 +264,20 @@ Using $v_3$ estimates from previously published PHENIX results, the $\cos(3\Delt
 
 ### Results
 
-Per-trigger $\pi^0$ - $h$ yields from 0--60% Au+Au at $\sqrt{s_{NN}} = 200$ GeV are produced for four trigger $p_T$ bins and three $\xi$ bins, consistent with PHENIX preliminary results. The ratio of central (0--20%) to mid-central (20--60%) integrated away-side yields reveals a significant suppression, indicating path-length-dependent energy loss.
+Per-trigger $\pi^0$ - $h$ yields from 0--60% Au+Au at $\sqrt{s_{NN}} = 200$ GeV are produced for four trigger $p_T$ bins and three $\xi$ bins, consistent with PHENIX preliminary results.
+
+<p align="center">
+  <img src="figures/bigcan_zoom_060_pi0_adj0.pdf" width="80%" />
+</p>
+**Figure 2:** Per-trigger $\pi^0 - h$ yields (0--60%) for four trigger $p_T$ bins and three $\xi$ bins.
+
+The ratio of central (0--20%) to mid-central (20--60%) integrated away-side yields reveals a significant suppression, indicating path-length-dependent energy loss.
+
+<p align="center">
+  <img src="figures/y_adj0_pi0_cent0_dpsi2.pdf" width="45%" />
+  <img src="figures/y_adj0_pi0_cent1_dpsi2.pdf" width="45%" />
+</p>
+**Figure 3:** Integrated away-side yields for central (0--20%, left) and mid-central (20--60%, right) collisions.
 
 ### Reaction Plane Dependence and Away-Side $v_2$
 
@@ -278,6 +298,11 @@ For integrated yields rather than full $\Delta\phi$ distributions:
 $$\frac{\pi}{16\sigma} \frac{\int_{2\pi/3}^{\pi} Y^+(\Delta\phi) - \int_{2\pi/3}^{\pi} Y^-(\Delta\phi)}{(0.75 \pm 0.1) \int_{2\pi/3}^{\pi} Y(\Delta\phi)} = v_{2a}$$
 
 A positive away-side $v_2$ is measured for all $\xi$ bins, decreasing at higher trigger $p_T$.
+
+<p align="center">
+  <img src="figures/xiv2fromfit_adj0_pi0_cent2.pdf" width="60%" />
+</p>
+**Figure 4:** Away-side associated hadron $v_2$ as a function of $\xi$ for mid-central (20--60%) collisions, extracted from the in/out-of-plane yield asymmetry.
 
 ### Systematic Errors
 
@@ -319,6 +344,11 @@ The ratio of inclusive to decay photons:
 $$R_\gamma = 1 + \frac{N_{\text{dir}}}{N_{\text{dec}}}$$
 
 is measured using the tagging method and is consistent with previously published PHENIX results for all centralities. The in vs. out-of-plane $R_\gamma$ ratio is most often less than one, consistent with a positive decay photon $v_2$.
+
+<p align="center">
+  <img src="figures/rg_inout_deceff_0_60.pdf" width="60%" />
+</p>
+**Figure 5:** In/out-of-plane $R_\gamma$ for 0--60% centrality. The ratio is less than one, consistent with a positive decay photon $v_2$.
 
 ---
 
