@@ -14,24 +14,24 @@ You want to measure correlations between particles emerging from a high-energy h
 
 ### Step 1: Event Mixing — Isolate the Uncorrelated Background
 
-Pair trigger particles with hadrons from *different* events in the same centrality class. Since the events are independent, flow correlations average out, leaving the **flat component**: `Y_mix = 4π ⟨a_t⟩⟨a_h⟩`. But triggers favor higher-multiplicity events, so a correction κₐ is needed.
+Pair trigger particles with hadrons from *different* events in the same centrality class. Since the events are independent, flow correlations average out, leaving the **flat component**: $Y_\text{mix} = 4\pi \langle a_t\rangle\langle a_h\rangle$. But triggers favor higher-multiplicity events, so a correction $\kappa_a$ is needed.
 
 ### Step 2: Reaction-Plane Binned Mixing — Isolate the Correlated Background
 
-Pair triggers with hadrons from events having the *same reaction-plane orientation*. This preserves the flow correlation: `Y_mix^ψ − Y_mix = 2π ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)`. But only the noisy *measured* reaction plane is available — κ_b corrects for resolution damping.
+Pair triggers with hadrons from events having the *same reaction-plane orientation*. This preserves the flow correlation: $Y_\text{mix}^{\psi} - Y_\text{mix} = 2\pi \langle\sigma b_t\rangle\langle\sigma b_h\rangle \cos(2\Delta\phi)$. But only the noisy *measured* reaction plane is available — $\kappa_b$ corrects for resolution damping.
 
 ### Step 3: In/Out-of-Plane Decomposition — Extract Geometry Dependence
 
-Constrain triggers to align with or against the reaction plane. The difference isolates cross terms: `Y_mix^ψ+ − Y_mix^ψ− = 8 ⟨a_h⟩⟨b_t σ⟩ + 8 ⟨a_t⟩⟨b_h σ⟩ cos(2Δφ)`. Two more corrections (κ_th, κ_ht) close the system.
+Constrain triggers to align with or against the reaction plane. The difference isolates cross terms: $Y_\text{mix}^{\psi+} - Y_\text{mix}^{\psi-} = 8\langle a_h\rangle\langle b_t\sigma\rangle + 8\langle a_t\rangle\langle b_h\sigma\rangle \cos(2\Delta\phi)$. Two more corrections ($\kappa_{th}$, $\kappa_{ht}$) close the system.
 
-### The Four κ Corrections
+### The Four $\kappa$ Corrections
 
 | Factor | Corrects For | Formula |
 |--------|-------------|---------|
-| κₐ | Multiplicity bias in flat term | ⟨a_t a_h⟩ / ⟨a_t⟩⟨a_h⟩ |
-| κ_b | Resolution damping in cosine term | ⟨b_t b_h⟩⟨σ⟩² / ⟨b_t σ⟩⟨b_h σ⟩ |
-| κ_th | Cross-term mismatch (t→h) | ⟨a_t b_h σ⟩ / ⟨a_t⟩⟨b_h σ⟩ |
-| κ_ht | Cross-term mismatch (h→t) | ⟨a_h b_t σ⟩ / ⟨a_h⟩⟨b_t σ⟩ |
+| $\kappa_a$ | Multiplicity bias in flat term | $\langle a_t a_h\rangle / \langle a_t\rangle\langle a_h\rangle$ |
+| $\kappa_b$ | Resolution damping in cosine term | $\langle b_t b_h\rangle \langle\sigma\rangle^2 / \langle b_t\sigma\rangle\langle b_h\sigma\rangle$ |
+| $\kappa_{th}$ | Cross-term mismatch (t→h) | $\langle a_t b_h\sigma\rangle / \langle a_t\rangle\langle b_h\sigma\rangle$ |
+| $\kappa_{ht}$ | Cross-term mismatch (h→t) | $\langle a_h b_t\sigma\rangle / \langle a_h\rangle\langle b_t\sigma\rangle$ |
 
 Uncertainties propagated via 1000-trial Monte Carlo pseudo-experiments.
 
@@ -41,150 +41,150 @@ Uncertainties propagated via 1000-trial Monte Carlo pseudo-experiments.
 
 ### 1. Single-Particle Ansatz
 
-The azimuthal distribution of any particle species is determined by the second-order reaction plane ψ₂:
+The azimuthal distribution of any particle species is determined by the second-order reaction plane $\psi_2$:
 
-```
-f_i(φ_i, ψ_{2i}) = a_i + b_i cos(2(φ_i − ψ_{2i}))
-```
+$$
+f_i(\phi_i, \psi_{2i}) = a_i + b_i \cos\bigl(2(\phi_i - \psi_{2i})\bigr)
+$$
 
-i ∈ {trigger t, hadron h}. Coefficients a_i, b_i depend on centrality (N_part) and p_T. Elliptic flow v_{2i} = b_i / 2a_i. Higher harmonics (n > 2) are either analytically eliminated or negligible.
+$i \in \{\text{trigger } t,\ \text{hadron } h\}$. Coefficients $a_i$, $b_i$ depend on centrality ($N_\text{part}$) and $p_T$. Elliptic flow $v_{2i} = b_i / 2a_i$. Higher harmonics ($n>2$) are either analytically eliminated or negligible.
 
 ### 2. Same-Event Pair Background
 
-The trigger–hadron Δφ = φ_t − φ_h distribution in the same event is the product of single-particle distributions with the same-event constraint δ(ψ_{2h}−ψ_{2t}):
+The trigger–hadron $\Delta\phi = \phi_t - \phi_h$ distribution in the same event is the product of single-particle distributions with the same-event constraint $\delta(\psi_{2h}-\psi_{2t})$:
 
-```
-F_th(Δφ) = 4π a_t a_h + 2π b_t b_h cos(2Δφ)
-```
+$$
+F_{th}(\Delta\phi) = 4\pi\, a_t a_h + 2\pi\, b_t b_h \cos(2\Delta\phi)
+$$
 
-This is the **exact background**. First term isotropic; second oscillatory. Averaging over N_part:
+This is the **exact background**. First term isotropic; second oscillatory. Averaging over $N_\text{part}$:
 
-```
-F_th(Δφ) = 4π ⟨a_t a_h⟩ + 2π ⟨b_t b_h⟩ cos(2Δφ)
-```
+$$
+F_{th}(\Delta\phi) = 4\pi \langle a_t a_h\rangle + 2\pi \langle b_t b_h\rangle \cos(2\Delta\phi)
+$$
 
 ### 3. Event Mixing — Measuring the Flat Term
 
-Mix triggers from event A with hadrons from event B (same centrality, independent ψ₂). The cosine term vanishes:
+Mix triggers from event $A$ with hadrons from event $B$ (same centrality, independent $\psi_2$). The cosine term vanishes:
 
-```
-E_th = 4π ⟨a_t⟩⟨a_h⟩
-```
+$$
+E_{th} = 4\pi \langle a_t\rangle\langle a_h\rangle
+$$
 
-This equals the flat term of F_th **only if** ⟨a_t a_h⟩ = ⟨a_t⟩⟨a_h⟩. But the trigger rate increases with N_part, biasing triggered events toward larger N_part than the average mixing event. The hadron yield also increases with N_part. Result: systematically underestimated flat background.
+This equals the flat term of $F_{th}$ **only if** $\langle a_t a_h\rangle = \langle a_t\rangle\langle a_h\rangle$. But the trigger rate increases with $N_\text{part}$, biasing triggered events toward larger $N_\text{part}$ than the average mixing event. The hadron yield also increases with $N_\text{part}$. Result: systematically underestimated flat background.
 
-**Correction κₐ:**
+**Correction $\kappa_a$:**
 
-```
-κ_a = ⟨a_t a_h⟩ / ⟨a_t⟩⟨a_h⟩
-```
+$$
+\kappa_a = \frac{\langle a_t a_h\rangle}{\langle a_t\rangle\langle a_h\rangle}
+$$
 
-Compute by estimating a_t(N_part) and a_h(N_part): plot per-centrality ⟨a_i⟩ vs ⟨N_part⟩, interpolate with cubic spline, integrate over h(N_part). Typical κₐ = 1.01–1.05.
+Compute by estimating $a_t(N_\text{part})$ and $a_h(N_\text{part})$: plot per-centrality $\langle a_i\rangle$ vs $\langle N_\text{part}\rangle$, interpolate with cubic spline, integrate over $h(N_\text{part})$. Typical $\kappa_a = 1.01$–$1.05$.
 
-After flat subtraction: `F_th − κ_a E_th = 2π ⟨b_t b_h⟩ cos(2Δφ)` — only the cosine term remains.
+After flat subtraction: $F_{th} - \kappa_a E_{th} = 2\pi \langle b_t b_h\rangle \cos(2\Delta\phi)$ — only the cosine term remains.
 
 ### 4. Reaction Plane Resolution
 
-The measured reaction plane ψ₂* differs from the true ψ₂. The conditional distribution is a Gaussian periodic in π:
+The measured reaction plane $\psi_2^*$ differs from the true $\psi_2$. The conditional distribution is a Gaussian periodic in $\pi$:
 
-```
-g(ψ₂−ψ₂*) = (1/√{2πω²}) Σ_k exp(−(ψ₂−ψ₂*+kπ)² / 2ω²)
-```
+$$
+g(\psi_2-\psi_2^*) = \frac{1}{\sqrt{2\pi\omega^2}} \sum_k \exp\!\left(-\frac{(\psi_2-\psi_2^*+k\pi)^2}{2\omega^2}\right)
+$$
 
-Convolving damps the flow coefficient by the resolution σ = exp(−2ω²):
+Convolving damps the flow coefficient by the resolution $\sigma = e^{-2\omega^2}$:
 
-```
-f_i* = ∫ g(ψ₂−ψ₂*) f_i dψ₂ = a_i + σ b_i cos(2(φ_i − ψ₂*))
-```
+$$
+f_i^* = \int g(\psi_2-\psi_2^*)\, f_i\, d\psi_2 = a_i + \sigma b_i \cos\bigl(2(\phi_i - \psi_2^*)\bigr)
+$$
 
-σ is measured from the correlation between independent sub-detectors: σ = √⟨cos(2(ψ_N−ψ_S))⟩.
+$\sigma$ is measured from the correlation between independent sub-detectors: $\sigma = \sqrt{\langle\cos(2(\psi_N-\psi_S))\rangle}$.
 
 ### 5. Reaction-Plane Binned Mixing — Measuring the Cosine Term
 
-Mix triggers with hadrons whose measured ψ₂* is within ε of the trigger's. Restricting ψ_{2h}* to [ψ_{2t}*−ε, ψ_{2t}*+ε] preserves the flow correlation:
+Mix triggers with hadrons whose measured $\psi_2^*$ is within $\varepsilon$ of the trigger's. Restricting $\psi_{2h}^*$ to $[\psi_{2t}^*-\varepsilon,\ \psi_{2t}^*+\varepsilon]$ preserves the flow correlation:
 
-```
-E_th^ψ = 4π ⟨a_t⟩⟨a_h⟩ + 2π ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
-```
+$$
+E_{th}^{\psi} = 4\pi \langle a_t\rangle\langle a_h\rangle + 2\pi \langle\sigma b_t\rangle\langle\sigma b_h\rangle \cos(2\Delta\phi)
+$$
 
-(With ε = π/80, sin(2ε)/2ε ≈ 1.) Subtracting the unmixed result:
+(With $\varepsilon = \pi/80$, $\sin(2\varepsilon)/2\varepsilon \approx 1$.) Subtracting the unmixed result:
 
-```
-E_th^ψ − E_th = 2π ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
-```
+$$
+E_{th}^{\psi} - E_{th} = 2\pi \langle\sigma b_t\rangle\langle\sigma b_h\rangle \cos(2\Delta\phi)
+$$
 
-But ⟨b_t b_h⟩ ≠ ⟨σ b_t⟩⟨σ b_h⟩ / ⟨σ⟩² — σ correlates with b.
+But $\langle b_t b_h\rangle \neq \langle\sigma b_t\rangle\langle\sigma b_h\rangle / \langle\sigma\rangle^2$ — $\sigma$ correlates with $b$.
 
-**Correction κ_b:**
+**Correction $\kappa_b$:**
 
-```
-κ_b = ⟨b_t b_h⟩ ⟨σ⟩² / ⟨σ b_t⟩⟨σ b_h⟩
-```
+$$
+\kappa_b = \frac{\langle b_t b_h\rangle \, \langle\sigma\rangle^2}{\langle\sigma b_t\rangle\langle\sigma b_h\rangle}
+$$
 
 ### 6. In/Out-of-Plane Backgrounds
 
 Restrict triggers to those aligned with (in-plane) or perpendicular to (out-of-plane) the reaction plane:
 
-```
-ψ_{2±}*(φ_t) = φ_t + α ± π/4,   α ∈ {0 (in), π/2 (out)}
-```
+$$
+\psi_{2\pm}^*(\phi_t) = \phi_t + \alpha \pm \frac{\pi}{4}, \qquad \alpha \in \{0\ (\text{in}),\ \pi/2\ (\text{out})\}
+$$
 
 The same-event backgrounds:
 
-```
-F_th^± = 2π ⟨a_t a_h⟩ ± 4 ⟨a_h b_t σ⟩ + (π ⟨b_t b_h⟩ ± 4 ⟨a_t b_h σ⟩) cos(2Δφ)
-```
+$$
+F_{th}^{\pm} = 2\pi\langle a_t a_h\rangle \pm 4\langle a_h b_t\sigma\rangle + \bigl(\pi\langle b_t b_h\rangle \pm 4\langle a_t b_h\sigma\rangle\bigr) \cos(2\Delta\phi)
+$$
 
 ### 7. In/Out-of-Plane Event Mixing
 
 Repeat RP-binned mixing with these limits:
 
-```
-E_th^{ψ±} = 2π ⟨a_t⟩⟨a_h⟩ ± 4 ⟨a_h⟩⟨b_t σ⟩ ± 4 ⟨a_t⟩⟨b_h σ⟩ cos(2Δφ) + π ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
-```
+$$
+E_{th}^{\psi\pm} = 2\pi \langle a_t\rangle\langle a_h\rangle \pm 4\langle a_h\rangle\langle b_t\sigma\rangle \pm 4\langle a_t\rangle\langle b_h\sigma\rangle \cos(2\Delta\phi) + \pi \langle\sigma b_t\rangle\langle\sigma b_h\rangle \cos(2\Delta\phi)
+$$
 
 The difference isolates the cross terms:
 
-```
-E_th^{ψ+} − E_th^{ψ−} = 8 ⟨a_h⟩⟨b_t σ⟩ + 8 ⟨a_t⟩⟨b_h σ⟩ cos(2Δφ)
-```
+$$
+E_{th}^{\psi+} - E_{th}^{\psi-} = 8\langle a_h\rangle\langle b_t\sigma\rangle + 8\langle a_t\rangle\langle b_h\sigma\rangle \cos(2\Delta\phi)
+$$
 
 Two more corrections:
 
-```
-κ_{th} = ⟨a_t b_h σ⟩ / ⟨a_t⟩⟨b_h σ⟩,   κ_{ht} = ⟨a_h b_t σ⟩ / ⟨a_h⟩⟨b_t σ⟩
-```
+$$
+\kappa_{th} = \frac{\langle a_t b_h\sigma\rangle}{\langle a_t\rangle\langle b_h\sigma\rangle}, \qquad
+\kappa_{ht} = \frac{\langle a_h b_t\sigma\rangle}{\langle a_h\rangle\langle b_t\sigma\rangle}
+$$
 
 ### 8. Corrected Backgrounds
 
-All four κ corrections applied:
+All four $\kappa$ corrections applied:
 
 **All-plane:**
 
-```
-F_th* = 4π κ_a ⟨a_t⟩⟨a_h⟩ + 2π κ_b ⟨σ b_t⟩⟨σ b_h⟩ / ⟨σ⟩² · cos(2Δφ)
-```
+$$
+F_{th}^* = 4\pi\, \kappa_a \langle a_t\rangle\langle a_h\rangle + \frac{2\pi\, \kappa_b \langle\sigma b_t\rangle\langle\sigma b_h\rangle}{\langle\sigma\rangle^2} \cos(2\Delta\phi)
+$$
 
 **In/out-of-plane:**
 
-```
-F_th^{±*} = 2π κ_a ⟨a_t⟩⟨a_h⟩ ± 4 κ_{ht} ⟨a_h⟩⟨b_t σ⟩
-          + (π κ_b ⟨σ b_t⟩⟨σ b_h⟩ / ⟨σ⟩² ± 4 κ_{th} ⟨a_t⟩⟨b_h σ⟩) cos(2Δφ)
-```
+$$
+F_{th}^{\pm*} = 2\pi\, \kappa_a \langle a_t\rangle\langle a_h\rangle \pm 4\kappa_{ht} \langle a_h\rangle\langle b_t\sigma\rangle + \left(\frac{\pi\, \kappa_b \langle\sigma b_t\rangle\langle\sigma b_h\rangle}{\langle\sigma\rangle^2} \pm 4\kappa_{th} \langle a_t\rangle\langle b_h\sigma\rangle\right) \cos(2\Delta\phi)
+$$
 
 ### 9. Final Subtraction
 
-The per-trigger yield, corrected for detector acceptance A(Δφ):
+The per-trigger yield, corrected for detector acceptance $A(\Delta\phi)$:
 
-```
-Y(Δφ) = [Y_same(Δφ) − κ_a Y_mix(Δφ) − κ_b (Y_mix^ψ − Y_mix) cos(2Δφ)] / A(Δφ)
-```
+$$
+Y(\Delta\phi) = \frac{Y_\text{same}(\Delta\phi) - \kappa_a Y_\text{mix}(\Delta\phi) - \kappa_b \bigl(Y_\text{mix}^{\psi} - Y_\text{mix}\bigr) \cos(2\Delta\phi)}{A(\Delta\phi)}
+$$
 
-For in/out-of-plane, the ± cross terms are additionally removed using κ_{th} and κ_{ht}.
+For in/out-of-plane, the $\pm$ cross terms are additionally removed using $\kappa_{th}$ and $\kappa_{ht}$.
 
 ### 10. Triangular Flow Elimination
 
-Expanding to include v₃: `f_i = a_i + b_2i cos(2Δφ_i) + b_3i cos(3Δφ_i)`. The pair distribution acquires a cos(3Δφ) term. By choosing away-side integration limits |Δφ − π| < π/3, the v₃ contribution vanishes identically — no measurement, no model, no assumption.
+Expanding to include $v_3$: $f_i = a_i + b_{2i}\cos(2\Delta\phi_i) + b_{3i}\cos(3\Delta\phi_i)$. The pair distribution acquires a $\cos(3\Delta\phi)$ term. By choosing away-side integration limits $|\Delta\phi - \pi| < \pi/3$, the $v_3$ contribution vanishes identically — no measurement, no model, no assumption.
 
 ---
 
