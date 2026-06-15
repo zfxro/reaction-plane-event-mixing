@@ -2,13 +2,13 @@
 
 **A self-contained statistical method for extracting signals from noisy, correlated data** — developed for jet tomography of the quark-gluon plasma at RHIC, but the technique generalizes to any setting where the background structure is not independently measurable.
 
-[The Problem](#the-problem) | [The Method](#the-method) | [Mathematics](#mathematics) | [Code](#code-structure) | [Thesis](#thesis)
+[The Problem](#the-problem) | [The Method](#the-method) | [Full Derivation](#full-derivation) | [Code](#code-structure) | [Thesis](#thesis)
 
 ---
 
 ## The Problem
 
-You want to measure correlations between particles emerging from a high-energy heavy ion collision. The signal you care about (from a hard scattering) is an order of magnitude smaller than the background (from collective flow), and the background has the **same angular structure** as the signal. You can't fit it out. You can't measure it independently. Standard approaches rely on external reference data or ad-hoc assumptions.
+You want to measure correlations between particles emerging from a high-energy heavy ion collision. The signal you care about is an order of magnitude smaller than the background (from collective flow), and the background has the **same angular structure** as the signal. You can't fit it out. You can't measure it independently. Standard approaches rely on external reference data or ad-hoc assumptions.
 
 **This framework measures and removes the entire background using only the data itself** — with no external inputs, no calibration runs, and no free parameters.
 
@@ -16,63 +16,33 @@ You want to measure correlations between particles emerging from a high-energy h
 
 ### Step 1: Event Mixing — Isolate the Uncorrelated Background
 
-Pair trigger particles with hadrons from *different* events in the same centrality class. Since the events are independent, any flow-induced correlations average out, leaving only the flat component:
-
-```
-Y_mix(Δφ) = 4π ⟨a_t⟩⟨a_h⟩
-```
-
-**The catch**: triggers favor higher-multiplicity events. The correction is a single parameter — **κₐ** — computed from the data.
+Pair trigger particles with hadrons from *different* events in the same centrality class. Since the events are independent, flow correlations average out, leaving the **flat component**: `Y_mix = 4π ⟨a_t⟩⟨a_h⟩`. But triggers favor higher-multiplicity events, so a correction κₐ is needed.
 
 ### Step 2: Reaction-Plane Binned Mixing — Isolate the Correlated Background
 
-Now pair triggers with hadrons from events having the *same reaction-plane orientation*. This preserves the flow correlation:
-
-```
-Y_mix^ψ(Δφ) − Y_mix(Δφ) = 2π ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
-```
-
-**The catch**: only the noisy *measured* reaction plane is available. A second correction — **κ_b** — accounts for the resolution damping.
+Pair triggers with hadrons from events having the *same reaction-plane orientation*. This preserves the flow correlation: `Y_mix^ψ − Y_mix = 2π ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)`. But only the noisy *measured* reaction plane is available — κ_b corrects for resolution damping.
 
 ### Step 3: In/Out-of-Plane Decomposition — Extract Geometry Dependence
 
-Constrain triggers to align with or against the reaction plane. The difference isolates cross terms:
-
-```
-Y_mix^ψ+ − Y_mix^ψ− = 8 ⟨a_h⟩⟨b_t σ⟩ + 8 ⟨a_t⟩⟨b_h σ⟩ cos(2Δφ)
-```
-
-Two more corrections (κ_th, κ_ht) close the system.
-
-### The Four κ Corrections
-
-| Factor | Corrects For | Formula |
-|--------|-------------|---------|
-| κₐ | Multiplicity bias in flat term | ⟨a_t a_h⟩ / ⟨a_t⟩⟨a_h⟩ |
-| κ_b | Resolution damping in cosine term | ⟨b_t b_h⟩⟨σ⟩² / ⟨b_t σ⟩⟨b_h σ⟩ |
-| κ_th | Cross-term mismatch (t→h) | ⟨a_t b_h σ⟩ / ⟨a_t⟩⟨b_h σ⟩ |
-| κ_ht | Cross-term mismatch (h→t) | ⟨a_h b_t σ⟩ / ⟨a_h⟩⟨b_t σ⟩ |
-
-All four are ~1–5% corrections computed from the same data. Statistical uncertainties are propagated via **1000-trial Monte Carlo pseudo-experiments** that resample the data within their errors.
-
-### The Final Subtraction
-
-```
-Y(Δφ) = [Y_same(Δφ) − κₐ·Y_mix(Δφ) − κ_b·(Y_mix^ψ − Y_mix)·cos(2Δφ)] / A(Δφ)
-```
-
-The acceptance function A(Δφ) is constructed from the mixed-event yield itself, closure-tested against published spectra.
+Constrain triggers to align with or against the reaction plane. The difference isolates cross terms: `Y_mix^ψ+ − Y_mix^ψ− = 8 ⟨a_h⟩⟨b_t σ⟩ + 8 ⟨a_t⟩⟨b_h σ⟩ cos(2Δφ)`. Two more corrections (κ_th, κ_ht) close the system.
 
 <p align="center">
   <img src="figures/dphi_pi0_ptt0_sumcent1_dpsi0_xi0_a.png" width="32%" />
   <img src="figures/dphi_pi0_ptt0_sumcent1_dpsi0_xi0_b.png" width="32%" />
   <img src="figures/dphi_pi0_ptt0_sumcent1_dpsi0_xi0_c.png" width="32%" />
 </p>
-**Figure 1:** Background subtraction sequence (π⁰–h, 20–60% centrality). Left: same-event data with flat background overlaid. Center: after flat subtraction, cosine background overlaid. Right: final cleaned correlation.
+**Figure:** Background subtraction in action (π⁰–h, 20–60% centrality). Left: raw same-event data with flat background overlaid. Center: after flat subtraction, cosine background overlaid. Right: final cleaned correlation.
 
-### Triangular Flow Elimination
+### The Four κ Corrections
 
-Third-order flow (v₃) vanishes analytically by integrating the away-side over |Δφ − π| < π/3 — no modeling required.
+| Factor | Corrects For | Formula | Typical Size |
+|--------|-------------|---------|-------------|
+| κₐ | Multiplicity bias in flat term | ⟨a_t a_h⟩ / ⟨a_t⟩⟨a_h⟩ | 1–5% |
+| κ_b | Resolution damping in cosine term | ⟨b_t b_h⟩⟨σ⟩² / ⟨b_t σ⟩⟨b_h σ⟩ | 1–3% |
+| κ_th | Cross-term mismatch (t→h) | ⟨a_t b_h σ⟩ / ⟨a_t⟩⟨b_h σ⟩ | ~2% |
+| κ_ht | Cross-term mismatch (h→t) | ⟨a_h b_t σ⟩ / ⟨a_h⟩⟨b_t σ⟩ | ~2% |
+
+Uncertainties propagated via 1000-trial Monte Carlo pseudo-experiments.
 
 ---
 
@@ -80,55 +50,44 @@ Third-order flow (v₃) vanishes analytically by integrating the away-side over 
 
 ### 1. Single-Particle Ansatz
 
-Assume the azimuthal distribution of any particle species i is determined by the second-order reaction plane ψ₂:
+The azimuthal distribution of any particle species is determined by the second-order reaction plane ψ₂:
 
 ```
 f_i(φ_i, ψ_{2i}) = a_i + b_i cos(2(φ_i − ψ_{2i}))
 ```
 
-where i ∈ {trigger t, hadron h}. The coefficients a_i and b_i are functions of collision centrality (number of participating nucleons N_part) and transverse momentum p_T. The elliptic flow harmonic is v_{2i} = b_i / 2a_i. Higher harmonics (n > 2) are suppressed: v₃ is eliminated analytically later, and n > 3 terms are negligible.
+i ∈ {trigger t, hadron h}. Coefficients a_i, b_i depend on centrality (N_part) and p_T. Elliptic flow v_{2i} = b_i / 2a_i. Higher harmonics (n > 2) are either analytically eliminated or negligible.
 
-Integrating over all azimuth and reaction plane gives the mean particle count per event:
+Integrating over all angles gives the mean count per event:
 
 ```
-∫₀²ᵖⁱ dφ_i · (1/π) ∫₀ᵖⁱ dψ_{2i} f_i = n_i = 2π a_i
+∫ dφ_i · (1/π) ∫ dψ_{2i} f_i = n_i = 2π a_i
 ```
 
 ### 2. Same-Event Pair Background
 
-The trigger–hadron pair distribution Δφ = φ_t − φ_h in the same event is the product of single-particle distributions integrated over all angles with the same-event constraint δ(ψ_{2h} − ψ_{2t}):
+The trigger–hadron Δφ = φ_t − φ_h distribution in the same event is the product of single-particle distributions with the same-event constraint δ(ψ_{2h}−ψ_{2t}):
 
 ```
-F_th(Δφ) = ∫₀²ᵖⁱ dφ_t · ∫₀ᵖⁱ (dψ_{2t}/π) · f_t
-         × ∫₀²ᵖⁱ dφ_h · ∫₀ᵖⁱ dψ_{2h} δ(ψ_{2h}−ψ_{2t}) · δ(Δφ − φ_t + φ_h) · f_h
+F_th(Δφ) = ∫ dφ_t ∫ (dψ_{2t}/π) f_t · ∫ dφ_h ∫ dψ_{2h} δ(ψ_{2h}−ψ_{2t}) δ(Δφ−φ_t+φ_h) f_h
+         = 4π a_t a_h + 2π b_t b_h cos(2Δφ)
 ```
 
-Evaluating the integrals:
-
-```
-F_th(Δφ) = 4π a_t a_h + 2π b_t b_h cos(2Δφ)
-```
-
-This is the **exact background** that must be removed. The first term is isotropic; the second oscillates with the pair azimuth. Both are proportional to products of the single-particle coefficients.
-
-Averaging over N_part distributions h(N_part) within each centrality bin gives the expectation values actually observed:
+This is the **exact background**. First term isotropic; second oscillatory. Averaging over N_part:
 
 ```
 F_th(Δφ) = 4π ⟨a_t a_h⟩ + 2π ⟨b_t b_h⟩ cos(2Δφ)
 ```
 
-where ⟨x⟩ = ∫ h(N_part) x(N_part) dN_part.
-
 ### 3. Event Mixing — Measuring the Flat Term
 
-Mix triggers from event A with hadrons from event B (same centrality, independent reaction plane). Since ψ_{2t} and ψ_{2h} are independent, the δ(ψ_{2h}−ψ_{2t}) constraint disappears, and the cosine term integrates to zero:
+Mix triggers from event A with hadrons from event B (same centrality, independent ψ₂). The cosine term vanishes:
 
 ```
-E_th = ∫ dφ_t ∫ dψ_{2t} f_t · ∫ dφ_h ∫ dψ_{2h} f_h · δ(Δφ − φ_t + φ_h)
-     = 4π ⟨a_t⟩⟨a_h⟩
+E_th = 4π ⟨a_t⟩⟨a_h⟩
 ```
 
-This gives us exactly the flat term of F_th — except that ⟨a_t a_h⟩ ≠ ⟨a_t⟩⟨a_h⟩. The trigger rate increases with N_part, biasing the triggered event sample toward larger N_part than the average mixing event. The hadron yield also increases with N_part. The result is a systematically underestimated flat background.
+This equals the flat term of F_th **only if** ⟨a_t a_h⟩ = ⟨a_t⟩⟨a_h⟩. But the trigger rate increases with N_part, biasing triggered events toward larger N_part than the average mixing event. The hadron yield also increases with N_part. Result: systematically underestimated flat background.
 
 **Correction κₐ:**
 
@@ -136,53 +95,41 @@ This gives us exactly the flat term of F_th — except that ⟨a_t a_h⟩ ≠ �
 κ_a = ⟨a_t a_h⟩ / ⟨a_t⟩⟨a_h⟩
 ```
 
-To compute κₐ, estimate a_t(N_part) and a_h(N_part) by plotting the per-centrality-bin expectation values ⟨a_t⟩, ⟨a_h⟩ versus ⟨N_part⟩ and interpolating with a cubic spline. The integral over h(N_part) then yields the correction directly. Typical values: 1.01–1.05, increasing in peripheral collisions where the N_part distributions are most asymmetric.
+Compute by estimating a_t(N_part) and a_h(N_part): plot per-centrality ⟨a_i⟩ vs ⟨N_part⟩, interpolate with cubic spline, integrate over h(N_part). Typical κₐ = 1.01–1.05, largest in peripheral collisions where N_part distributions are most asymmetric.
 
-After flat subtraction:
-
-```
-F_th − κ_a · E_th = 2π ⟨b_t b_h⟩ cos(2Δφ)
-```
-
-Only the cosine term remains.
+After flat subtraction: `F_th − κ_a E_th = 2π ⟨b_t b_h⟩ cos(2Δφ)` — only the cosine term remains.
 
 ### 4. Reaction Plane Resolution
 
-We don't know the true reaction plane ψ₂ — only an imperfect measurement ψ₂*. The conditional distribution is Gaussian with period π:
+The measured reaction plane ψ₂* differs from the true ψ₂. The conditional distribution is a Gaussian periodic in π:
 
 ```
-g(ψ₂ − ψ₂*) = (1/√{2π ω²}) Σ_{k=−∞}^{∞} exp(−(ψ₂ − ψ₂* + kπ)² / 2ω²)
+g(ψ₂−ψ₂*) = (1/√{2πω²}) Σ_k exp(−(ψ₂−ψ₂*+kπ)² / 2ω²)
 ```
 
-Convolving the single-particle distribution with this kernel damps the flow coefficient by the resolution:
+Convolving damps the flow coefficient by the resolution σ = exp(−2ω²):
 
 ```
-f_i* = ∫₀ᵖⁱ dψ_{2i} g(ψ₂ − ψ₂*) f_i
-     = a_i + σ b_i cos(2(φ_i − ψ_{2i}*))
+f_i* = ∫ g(ψ₂−ψ₂*) f_i dψ₂ = a_i + σ b_i cos(2(φ_i − ψ₂*))
 ```
 
-where σ = exp(−2ω²) is the reaction plane resolution, measurable from the correlation between independent sub-detectors (north/south FVTX halves):
-
-```
-σ = √⟨cos(2(ψ_N − ψ_S))⟩
-```
+The resolution σ is measured from the correlation between independent sub-detectors (north/south FVTX): σ = √⟨cos(2(ψ_N−ψ_S))⟩.
 
 ### 5. Reaction-Plane Binned Mixing — Measuring the Cosine Term
 
-Now mix triggers with hadrons from events whose measured reaction plane ψ₂* is within ε of the triggered event's. Restricting ψ_{2h}* to [ψ_{2t}* − ε, ψ_{2t}* + ε] preserves the flow correlation:
+Mix triggers with hadrons whose measured ψ₂* is within ε of the trigger's. Restricting ψ_{2h}* to [ψ_{2t}*−ε, ψ_{2t}*+ε] preserves the flow correlation:
 
 ```
-E_th^ψ = ∫ dφ_t ∫ dψ_{2t}* f_t* · (1/2ε) ∫_{ψ_{2t}*−ε}^{ψ_{2t}*+ε} dψ_{2h}* ∫ dφ_h f_h* · δ(Δφ − φ_t + φ_h)
-       = 4π ⟨a_t⟩⟨a_h⟩ + 2π · (sin(2ε)/2ε) · ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
+E_th^ψ = 4π ⟨a_t⟩⟨a_h⟩ + 2π · (sin(2ε)/2ε) · ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
 ```
 
-With ε = π/80, sin(2ε)/2ε ≈ 1. Subtracting the unmixed result isolates the cosine term:
+With ε = π/80, sin(2ε)/2ε ≈ 1. Subtracting the unmixed result:
 
 ```
 E_th^ψ − E_th = 2π ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
 ```
 
-But ⟨b_t b_h⟩ ≠ ⟨σ b_t⟩⟨σ b_h⟩ / ⟨σ⟩² — the resolution damping factor σ correlates with b, so the product of averages differs from the average of the product.
+But ⟨b_t b_h⟩ ≠ ⟨σ b_t⟩⟨σ b_h⟩ / ⟨σ⟩² — σ correlates with b, so the product of averages differs from the average of the product.
 
 **Correction κ_b:**
 
@@ -190,50 +137,61 @@ But ⟨b_t b_h⟩ ≠ ⟨σ b_t⟩⟨σ b_h⟩ / ⟨σ⟩² — the resolution d
 κ_b = ⟨b_t b_h⟩ ⟨σ⟩² / ⟨σ b_t⟩⟨σ b_h⟩
 ```
 
-The components ⟨σ b_t⟩ and ⟨σ b_h⟩ are extracted from E_th^ψ and from the in/out-of-plane cross terms below. The true ⟨b_t b_h⟩ requires b_t(N_part) and b_h(N_part), estimated by ⟨b_i⟩ ≈ ⟨σ b_i⟩/⟨σ⟩ (valid because σ varies weakly within a centrality bin) followed by the same spline interpolation used for κₐ.
+⟨σ b_t⟩ and ⟨σ b_h⟩ are extracted from E_th^ψ and the in/out-of-plane cross terms. b_i(N_part) is estimated by ⟨b_i⟩ ≈ ⟨σ b_i⟩/⟨σ⟩ (valid because σ varies weakly within a centrality bin), then spline-interpolated as in κₐ.
 
 ### 6. In/Out-of-Plane Backgrounds
 
-Restrict triggers to those with measured reaction plane aligned with (in-plane) or perpendicular to (out-of-plane) the trigger azimuth:
+Restrict triggers to those aligned with (in-plane) or perpendicular to (out-of-plane) the reaction plane:
 
 ```
 ψ_{2±}*(φ_t) = φ_t + α ± π/4,   α ∈ {0 (in), π/2 (out)}
 ```
 
-The same-event backgrounds with these limits are:
+The same-event backgrounds with these limits:
 
 ```
 F_th^± = 2π ⟨a_t a_h⟩ ± 4 ⟨a_h b_t σ⟩
        + (π ⟨b_t b_h⟩ ± 4 ⟨a_t b_h σ⟩) cos(2Δφ)
 ```
 
-Two new cross terms ⟨a_h b_t σ⟩ and ⟨a_t b_h σ⟩ appear, with opposite signs for in vs. out-of-plane.
-
 ### 7. In/Out-of-Plane Event Mixing
 
-Repeat the RP-binned mixing with these same integration limits:
+Repeat RP-binned mixing with these limits:
 
 ```
 E_th^{ψ±} = 2π ⟨a_t⟩⟨a_h⟩ ± 4 ⟨a_h⟩⟨b_t σ⟩ ± 4 ⟨a_t⟩⟨b_h σ⟩ cos(2Δφ)
           + π ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
 ```
 
-Taking the difference isolates the cross terms:
+The difference isolates the cross terms:
 
 ```
 E_th^{ψ+} − E_th^{ψ−} = 8 ⟨a_h⟩⟨b_t σ⟩ + 8 ⟨a_t⟩⟨b_h σ⟩ cos(2Δφ)
 ```
 
-The flat piece is obtained by integrating over Δφ; the cosine coefficient by fitting after flat subtraction.
-
-Two more corrections account for the residual mismatches:
+Two more corrections:
 
 ```
-κ_{th} = ⟨a_t b_h σ⟩ / ⟨a_t⟩⟨b_h σ⟩
-κ_{ht} = ⟨a_h b_t σ⟩ / ⟨a_h⟩⟨b_t σ⟩
+κ_{th} = ⟨a_t b_h σ⟩ / ⟨a_t⟩⟨b_h σ⟩,   κ_{ht} = ⟨a_h b_t σ⟩ / ⟨a_h⟩⟨b_t σ⟩
 ```
 
-### 8. Corrected Backgrounds
+### 8. Measured Background Components
+
+The four background terms are extracted directly from the mixing data:
+
+<p align="center">
+  <img src="figures/agah4pi_adj0_pi0_ptt0.png" width="45%" />
+  <img src="figures/ahbgs8_adj0_pi0_ptt0.png" width="45%" />
+</p>
+<p align="center">
+  <img src="figures/bgsbhs2pi_adj0_pi0_ptt0.png" width="45%" />
+  <img src="figures/agbhs8_adj0_pi0_ptt0.png" width="45%" />
+</p>
+**Figure:** Measured background components for π⁰ (5 < p_T < 7 GeV) − h. Top left: flat term 4π⟨a_t a_h⟩. Top right: cross term 8⟨a_h b_t σ⟩. Bottom left: cosine term 2π⟨b_t b_h σ²⟩. Bottom right: cross term 8⟨a_t b_h σ⟩. Each panel shows the actual data measurement with fit.
+
+The individual components ⟨a_t⟩, ⟨a_h⟩, ⟨b_t σ⟩, ⟨b_h σ⟩ are extracted from these four measured terms and used to compute the κ corrections.
+
+### 9. Corrected Backgrounds
 
 All four κ corrections applied:
 
@@ -250,31 +208,19 @@ F_th^{±*} = 2π κ_a ⟨a_t⟩⟨a_h⟩ ± 4 κ_{ht} ⟨a_h⟩⟨b_t σ⟩
           + (π κ_b ⟨σ b_t⟩⟨σ b_h⟩ / ⟨σ⟩² ± 4 κ_{th} ⟨a_t⟩⟨b_h σ⟩) cos(2Δφ)
 ```
 
-### 9. Final Subtraction
+### 10. Final Subtraction
 
-The per-trigger yield, corrected for detector acceptance A(Δφ) derived from the mixed-event distribution:
-
-```
-Y(Δφ) = [Y_same(Δφ) − κ_a · Y_mix(Δφ) − κ_b · (Y_mix^ψ − Y_mix) · cos(2Δφ)] / A(Δφ)
-```
-
-For in/out-of-plane, the ± cross terms are additionally removed using κ_{th} and κ_{ht} with the same structure.
-
-### 10. Triangular Flow Elimination
-
-Expanding the single-particle distribution to include v₃:
+The per-trigger yield, corrected for detector acceptance A(Δφ):
 
 ```
-f_i = a_i + b_2i cos(2Δφ_i) + b_3i cos(3Δφ_i)
+Y(Δφ) = [Y_same(Δφ) − κ_a Y_mix(Δφ) − κ_b (Y_mix^ψ − Y_mix) cos(2Δφ)] / A(Δφ)
 ```
 
-the pair distribution acquires a cos(3Δφ) term. By choosing the away-side integration limits:
+For in/out-of-plane, the ± cross terms are additionally removed using κ_{th} and κ_{ht}.
 
-```
-∫_{2π/3}^{π} cos(3Δφ) dΔφ = 0
-```
+### 11. Triangular Flow Elimination
 
-the v₃ contribution vanishes identically — no measurement, no model, no assumption. Just the geometry of the integral.
+Expanding to include v₃: `f_i = a_i + b_2i cos(2Δφ_i) + b_3i cos(3Δφ_i)`. The pair distribution acquires a cos(3Δφ) term. By choosing away-side integration limits |Δφ − π| < π/3, the v₃ contribution vanishes identically — no measurement, no model, no assumption. Just the geometry of the integral.
 
 ---
 
@@ -299,7 +245,7 @@ macros/                       ~70 ROOT/C++ analysis and plotting macros
   draw*.C                     Publication figures
 ```
 
-C++17 with ROOT. Processed ~20B minimum-bias Au+Au events over the grid (PROOF). Events are compressed offline for flexible cross-event mixing.
+C++17 with ROOT. Processed ~20B minimum-bias Au+Au events over the grid (PROOF). Events are compressed offline for flexible cross-event mixing across the full data-taking period (~4 months, 2014).
 
 ---
 
