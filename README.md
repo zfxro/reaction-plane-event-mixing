@@ -4,11 +4,19 @@ Reaction-plane-dependent event mixing for removing the collective background fro
 
 ## Physics Context
 
-Ultrarelativistic heavy ion collisions at RHIC create a QGP at energy densities $\gtrsim 1$ GeV/fm$^3$. Partons from initial hard scatterings lose energy via induced gluon bremsstrahlung (BDMPS/GLV) as they traverse this medium. The energy loss $\Delta E$ depends on the transport coefficient $\hat{q}$ and the path length $L$ through the medium: $\Delta E \propto \hat{q} L^2$ (BDMPS) or $\Delta E \propto \hat{q} L$ (GLV). Measuring this path-length dependence requires separating the signal from the overwhelming collective background.
+A fundamental constituent of matter, the quark, is confined within hadrons and not observed in isolation. At sufficiently high energy densities ($\gtrsim 1$ GeV/fm$^3$) the individuality of hadrons is blurred and quarks become deconfined. This newly discovered state of matter, known as quark-gluon plasma (QGP), existed in the early universe and is created in ultrarelativistic heavy ion collisions today. The quark gluon mixture rapidly thermalizes ($\lesssim 1$ fm/c after the heavy ion collision) before undergoing a cooling expansion and subsequent hadronization.
+
+A proposed signature of the QGP, high transverse momentum ($p_T \gtrsim 2$ GeV) hadron suppression, was detected at RHIC in the early 2000's. Partons produced in initial hard scatterings interact strongly with the QCD colored medium losing energy via gluon bremsstrahlung. A quenching in central Au+Au collisions of high $p_T$ hadron spectra as compared to scaled spectra p+p collisions had been discovered.
+
+Direct photon triggering has been referred to as the "golden channel" for jet tomography of the QGP. The colorless photon escapes the QCD medium unscathed, making its momentum a good proxy for the away-side jet's, and without introducing any surface bias.
+
+The largest obstacle when making these types of measurements is the overwhelming and partially correlated background. Typically the background associated with the collective behavior of the medium is subtracted with the help of results from an external analysis. The remaining background is then subtracted by assuming a zero yield at minimum (ZYAM) or by implementing an absolute minimization method based on the event multiplicity. We expand on the latter by including additional information on the collision geometry. This allows for the removal of collective background without being reliant on previous measurements. An added bonus is the then straightforward measurement of in and out-of-plane yields.
 
 ## Background Removal: Full Derivation
 
 ### Single Particle Distribution
+
+For nonzero impact parameter the overlapping region of the ions in the transverse plane resembles an ellipse. This causes an anisotropy of the azimuthal distribution of particles in the detector known as elliptic flow. The event by event multiplicity is modulated by a $\cos(2\Delta\phi)$ factor where $\Delta\phi = \phi - \psi_2$ (the difference in azimuth of a particle and the second order reaction plane).
 
 The azimuthal distribution of particles decomposes into an isotropic part plus elliptic flow relative to the reaction plane $\psi_2$:
 
@@ -22,7 +30,7 @@ and the relation $b = 2 v_2 a$ connecting to the standard elliptic flow harmonic
 
 ### Pair Background Convolution
 
-The trigger-hadron pair distribution is the product of single-particle distributions with delta-function constraints enforcing same reaction plane and $\Delta\phi$ pairing:
+The delta function $\delta(\psi_{2h} - \psi_{2t})$ is required since the triggers and hadrons originate from the same event. The delta function $\delta(\Delta\phi - \phi_t + \phi_h)$ allows us to write this distribution in terms of the pair azimuthal difference. The trigger-hadron pair distribution is the product of single-particle distributions with delta-function constraints enforcing same reaction plane and $\Delta\phi$ pairing:
 
 $$\int_0^{2\pi} d\phi_t\ \frac{1}{\pi} \int_0^{\pi} d\psi_{2t}\ f_t \int_0^{2\pi} d\phi_h\ \delta(\Delta\phi - \phi_t + \phi_h) \int_0^{\pi} d\psi_{2h}\ \delta(\psi_{2h} - \psi_{2t})\ f_h$$
 
@@ -34,11 +42,11 @@ where $\langle x \rangle = \int_0^\infty dN_{\text{part}}\ h(N_{\text{part}})\ x
 
 ### Event Mixing Without Reaction Plane
 
-Mixing triggers with hadrons from different events (same centrality, independent reaction planes) integrates out the cosine term:
+An attempt to measure the background can be made by mixing photons from the triggered events with hadrons of other events. Mixing triggers with hadrons from different events (same centrality, independent reaction planes) integrates out the cosine term:
 
 $$E_{th} = 4\pi \langle a_t \rangle \langle a_h \rangle$$
 
-This captures only the flat background, but with a bias: $\langle a_t \rangle \langle a_h \rangle \neq \langle a_t a_h \rangle$ because trigger particles preferentially emerge from higher-multiplicity events within each centrality bin. The correction factor is:
+This is precisely the first term of the pair background and we are halfway to removing the background. Unfortunately, we were naive in our approach. In the event mixing, a trigger is paired with hadrons from events having the same centrality as the triggered event. We have said that $a$ and $b$ are functions of centrality but to be more exact the physical quantity that they depend on is $N_{part}$, the number of nucleons participating in the collision. For each centrality there is not a single value of $N_{part}$, but a distribution. Because the trigger count increases with $N_{part}$, the triggered events are skewed toward values larger than the average $N_{part}$ of the mixed events. The end result is an underestimated level of background. The correction factor is:
 
 $$\kappa_a = \frac{\langle a_t a_h \rangle}{\langle a_t \rangle \langle a_h \rangle} = \frac{\int_0^\infty dN_{\text{part}}\ h(N_{\text{part}})\ a_t(N_{\text{part}})\ a_h(N_{\text{part}})}{\int_0^\infty dN_{\text{part}}\ h(N_{\text{part}})\ a_t(N_{\text{part}}) \int_0^\infty dN_{\text{part}}\ h(N_{\text{part}})\ a_h(N_{\text{part}})}$$
 
@@ -46,7 +54,7 @@ After flat subtraction: $F_{th} - \kappa_a E_{th} = 2\pi \langle b_t b_h \rangle
 
 ### Reaction Plane Resolution
 
-The measured reaction plane $\psi_2^*$ is related to the true plane $\psi_2$ via a periodic Gaussian resolution kernel:
+The $\cos(2\Delta\phi)$ term of the background comes from correlations of the triggers and hadrons to the reaction plane. This term can potentially be measured if the events with which we mix triggers have the same reaction plane orientation as the triggered event. Unfortunately we falsely assumed that we had knowledge of the true reaction plane orientations. Of course this is not possible, but we do know the measured reaction plane. The relationship between the true, $\psi_2$, and measured, $\psi_2^*$, reaction plane angles is assumed to be normal with a period of $\pi$:
 
 $$g = \frac{1}{\sqrt{2\pi\omega^2}} \sum_{k=-\infty}^{\infty} \exp\left(-\frac{(\psi_2 - \psi_2^* + k\pi)^2}{2\omega^2}\right)$$
 
@@ -60,33 +68,41 @@ $$\sigma = \langle \cos(2(\Psi^{\text{meas}} - \Psi^{\text{real}})) \rangle = \s
 
 ### Event Mixing With Reaction Plane
 
-Mixing triggers with hadrons from events having the same reaction plane orientation introduces a sinc-like factor from the finite bin width $\epsilon$:
+Since we have already removed the scalar term from the pair background we can isolate the cosine term by taking the difference of the mixing results with and without reaction plane binning. Mixing triggers with hadrons from events having the same reaction plane orientation introduces a sinc-like factor from the finite bin width $\epsilon$:
 
 $$E_{th}^{\psi} = 4\pi \langle a_t \rangle \langle a_h \rangle + 2\pi \frac{\sin(2\epsilon)}{2\epsilon} \langle \sigma b_t \rangle \langle \sigma b_h \rangle \cos(2\Delta\phi)$$
 
+The factor $\langle \sigma b_t \rangle \langle \sigma b_h \rangle$ can be found by fitting this difference in distributions by a $\cos(2\Delta\phi)$.
+
 ### In/Out-of-Plane Decomposition
+
+Thus far, a $\psi_2$ dependence has only been introduced into the event mixing, in an attempt to measure the cosine term of the pair background. However the $\psi_2$ dependence of the signal could also be considered. We will look at two cases of the pair yield measurement: in and out-of-plane. Before doing so, the background in each case must be understood.
 
 Restricting triggers to those aligned in-plane or out-of-plane with the measured reaction plane:
 
 $$F_{th}^{\pm} = 2\pi \langle a_t a_h \rangle \pm 4 \langle a_h b_t \sigma \rangle + \big(\pi \langle b_t b_h \rangle \pm 4 \langle a_t b_h \sigma \rangle\big) \cos(2\Delta\phi)$$
 
-The cross terms are isolated from the difference of in and out-of-plane mixed event yields:
+The cross terms are what are new here. We isolate them by exploiting the symmetry of in and out-of-plane mixed event yields:
 
 $$E_{th}^{p} - E_{th}^{m} = 8 \langle a_h \rangle \langle b_t \sigma \rangle + 8 \langle a_t \rangle \langle b_h \sigma \rangle \cos(2\Delta\phi)$$
 
+The first, flat term can be measured by integrating over all $\Delta\phi$. The second, cosine term can be found by removing the previously calculated flat term and fitting the result with a simple cosine function.
+
 ### Complete $\kappa$ Correction Set
 
-Four independent correction factors account for correlations between particle properties and the $N_{\text{part}}$ distribution:
+To account for the discrepancies between measured and actual background terms, four independent correction factors are calculated:
 
 $$\kappa_a = \frac{\langle a_t a_h \rangle}{\langle a_t \rangle \langle a_h \rangle}, \quad \kappa_b = \frac{\langle b_t b_h \rangle \langle \sigma \rangle^2}{\langle b_t \sigma \rangle \langle b_h \sigma \rangle}, \quad \kappa_{th} = \frac{\langle a_t b_h \sigma \rangle}{\langle a_t \rangle \langle b_h \sigma \rangle}, \quad \kappa_{ht} = \frac{\langle a_h b_t \sigma \rangle}{\langle a_h \rangle \langle b_t \sigma \rangle}$$
 
+In order to calculate $\kappa_{ij}$, $a_i$ and $b_j \sigma$ must be known as functions of $N_{part}$. Both $a_t(N_{part})$ and $a_h(N_{part})$ were previously determined. The products $b_t(N_{part}) \sigma(N_{part})$ and $b_h(N_{part}) \sigma(N_{part})$ can similarly be estimated from their expectation values, $\langle b_t \sigma \rangle$ and $\langle b_h \sigma \rangle$, which are extracted from the in/out-of-plane mixed event difference.
+
 ### Corrected Backgrounds
 
-All-plane:
+With measured background estimates $E_{th}$, $E_{th}^{\psi}$, and $E_{th}^{\pm}$; and correction factors $\kappa_a$, $\kappa_b$, $\kappa_{th}$, and $\kappa_{ht}$; we can begin chipping away at the inherent backgrounds. The measured all-plane background, including corrections, is:
 
 $$F_{th}^* = 4\pi \kappa_a \langle a_t \rangle \langle a_h \rangle + 2\pi \kappa_b \frac{\langle b_t \sigma \rangle \langle b_h \sigma \rangle}{\langle \sigma \rangle^2} \cos(2\Delta\phi)$$
 
-In/out-of-plane:
+The in/out-of-plane backgrounds:
 
 $$F_{th}^{\pm*} = 2\pi \kappa_a \langle a_t \rangle \langle a_h \rangle \pm 4 \kappa_{ht} \langle a_h \rangle \langle b_t \sigma \rangle + \left(\pi \kappa_b \frac{\langle b_t \sigma \rangle \langle b_h \sigma \rangle}{\langle \sigma \rangle^2} \pm 4 \kappa_{th} \langle a_t \rangle \langle b_h \sigma \rangle\right) \cos(2\Delta\phi)$$
 
@@ -102,7 +118,7 @@ where $A(\Delta\phi) = Y_{\text{mix}}(\Delta\phi) / n_{h,\text{exp}}$ is the acc
 
 ### Generalized Flow Decomposition
 
-The full two-particle correlation expanded to arbitrary flow harmonics:
+There are higher order effects caused by fluctuations in the initial parton density of the collision which introduce $\cos\big(n(\phi-\psi_n)\big)$ dependencies with $n > 2$. The full two-particle correlation expanded to arbitrary flow harmonics:
 
 $$n_{th} = 2\pi a_t a_h \left(1 + 2 \sum_{n=2}^{\infty} v_{tn} v_{hn} \cos(n\Delta\phi)\right)$$
 
@@ -126,9 +142,11 @@ The $0.75 \pm 0.1$ factor accounts for the shape dependence of the yield ratio.
 
 ## Direct Photon Tagging
 
+Neutral pions are responsible for producing 80% of the decay photons from 200 GeV Au+Au collisions. Nearly 99% of these pions decay via $\pi^0 \rightarrow 2\gamma$, a relatively simple channel to detect. It is with the help of this channel that we tag photons as product of decays. To reduce the combinatorial background, while maintaining an analytical understanding of the tagging efficiency, an asymmetry limit is imposed: $\alpha_{max} = 0.8$.
+
 ### Tagging Matrix
 
-The measured tagged photon counts form a linear system mixing true direct and decay contributions:
+So in order to measure the direct photon signal just two functions must be known: the efficiency and mistag probability of the decay photon tagging method. Both will be obtained via simulations. The measured tagged photon counts form a linear system mixing true direct and decay contributions:
 
 $$\begin{pmatrix} N_{\text{dec}}^t \\ N_{\text{dir}}^t \end{pmatrix} = \begin{pmatrix} \tau & \mu \\ 1-\mu & 1-\tau \end{pmatrix} \begin{pmatrix} N_{\text{dec}} \\ N_{\text{dir}} \end{pmatrix}$$
 
@@ -138,35 +156,43 @@ $$N_{\text{dir}} = \frac{\tau}{\tau - \mu} N_{\text{dir}}^t - \frac{1-\tau}{\tau
 
 ### Decay Photon Spectrum
 
-The decay photon energy distribution from a power-law pion spectrum $dN_\pi/dp_\pi \propto p_\pi^{-n}$:
+The opening angle between the two photons of a $\pi^0$ decay can extend to $180^{\circ}$. As we move to relativistic speeds, a smaller opening angle becomes increasingly more likely. The decay photon energy distribution from a power-law pion spectrum $dN_\pi/dp_\pi \propto p_\pi^{-n}$:
 
 $$\frac{dN_\gamma}{dE_\gamma} = \int_{p_{\pi,\min}}^{\infty} dp_\pi \frac{dN_\pi}{dp_\pi} \frac{1}{p_\pi} \propto \left(E_\gamma - \frac{m_\pi^2}{4E_\gamma}\right)^{-n} (\cos\theta)^{-n+1}$$
 
-The fraction lost by the asymmetry cut $\alpha_{\max}$:
+PHENIX has measured $n$ in Au+Au 200 GeV to be $7.1 \pm 0.1$. The fraction lost by the asymmetry cut $\alpha_{\max}$:
 
 $$a \approx 1 - \left(\frac{2}{1+\alpha_{\max}}\right)^{-n}$$
 
+Thus around half, $a \approx 0.53$, of the decay photons are missed by the tagging method due to the max asymmetry cut. Although this is the largest factor that contributes to the tagging efficiency, it is not the only. Conversion probabilities, detector inefficiencies, and cluster merging effects must also be taken into account.
+
 ### Composite Tagging Efficiency
 
-Weighted over $\pi^0$ (80%) and $\eta$ (20%) decay channels:
+$\pi^0$'s are simulated flat in $p_T$, $\phi$, and $\eta$ and forced to decay to $2\gamma$. 80% of decay photons are produced via this channel. The majority of the remaining 20% are produced via $\eta \rightarrow 2\gamma$. These decays are simulated and run through the same procedure. Using these decays as a proxy for the entire remainder the tagging efficiency becomes:
 
 $$\tau(p_T) = \frac{0.8 \left(N_{\text{tag}}^{\pi^0}/N_{\text{true}}^{\pi^0}\right) + 0.2 \left(N_{\text{tag}}^{\eta}/N_{\text{true}}^{\eta}\right)}{0.8 \left(N_{\text{meas}}^{\pi^0}/N_{\text{true}}^{\pi^0}\right) + 0.2 \left(N_{\text{meas}}^{\eta}/N_{\text{true}}^{\eta}\right)}$$
 
 ### Direct-to-Inclusive Ratio
 
+A routinely referenced photon measurement is the ratio of inclusive to decay photons:
+
 $$R_\gamma = 1 + \frac{N_{\text{dir}}}{N_{\text{dec}}}$$
 
 ### Hybrid Yield Extraction
 
-The direct photon-hadron yield from inclusive minus decay:
+The pure tagging method suffers from statistical limitations. A hybrid approach was developed in which per-trigger $\gamma_{\text{dec}} - h$ yields were produced from $\pi^0 - h$ yields with assistance from simulations. The direct photon-hadron yield is obtained from inclusive minus decay:
 
 $$Y_{\text{dir}} = \frac{1}{N_{\text{dir}}} \left(N_{\text{inc}} Y_{\text{inc}} - N_{\text{dec}} Y_{\text{dec}}\right)$$
 
+This subtraction method yields a higher statistical precision than the pure tagging method. The ingredients of the pure tagging method, the tagged decay and tagged direct $\gamma - h$ yields, have been usurped by the higher statistic $\pi^0 - h$ and $\gamma_{\text{inc}} - h$ yields.
+
 ## Event Plane Construction
+
+Measurement of the second order reaction plane angle $\psi_2$, which facilitates the event mixing and background removal methods of this analysis, is done by the FVTX. The forward vertex detector tracks charged particles in the pseudorapidity region $|1.2| < \eta < |2.2|$. The north and south detectors each have four annular semiconductor layers.
 
 ### Q-Vector and Recentering
 
-The event plane angle from the second harmonic Q-vector:
+The reaction plane angle is measured by summing over all clusters in the FVTX while weighting by their position. The event plane angle from the second harmonic Q-vector:
 
 $$Q_x^{\text{obs}} = \sum_i \cos(2\phi_i), \quad Q_y^{\text{obs}} = \sum_i \sin(2\phi_i), \quad \Psi^{\text{obs}} = \frac{1}{2} \tan^{-1}\left(\frac{Q_y^{\text{obs}}}{Q_x^{\text{obs}}}\right)$$
 
@@ -182,25 +208,33 @@ $$A_k = -\frac{2}{k} \langle \sin(k\Psi^{\text{rec}}) \rangle, \quad B_k = \frac
 
 ### $\pi^0$-Hadron Correlations
 
-Per-trigger $\pi^0$-h yields from 0--60% Au+Au at $\sqrt{s_{NN}} = 200$ GeV. Away-side yield increases with trigger $p_T$; shape broadens at higher $\xi = \ln(p_{Tt}/p_{Th})$.
+The high yield of the light meson and its relatively simple decay kinatics make the $\pi^0$ an ideal first candidate for testing the background removal machinery. The bias of the measured high $p_T$ neutral pions to have emerged from the surface of the nuclear interaction region, as well as the increased likelihood of the away-side jet to be parented by a gluon, make $\pi^0$ tagged hadrons an interesting probe of the QGP.
+
+Per-trigger $\pi^0$-h yields from 0--60% Au+Au at $\sqrt{s_{NN}} = 200$ GeV. The near side amplitude is larger than the away side's. One possible explanation is the $\pi^0$'s surface bias. A high momentum pion is less likely to have originated near the center of the nuclear overlap region where it would be more susceptible to energy loss. The near side associated hadrons therefore have most likely traversed a shorter distance in the medium than those on the away side and consequently lost less energy. Away-side yield increases with trigger $p_T$; shape broadens at higher $\xi = \ln(p_{Tt}/p_{Th})$ as partons from the initial collision fragment to ever less momentum.
 
 <!-- TODO: Add figure — Per-trigger π⁰-h yields, 0-60%, all p_Tt and ξ bins -->
 
 ### Centrality Comparison
 
-Central (0--20%) vs mid-central (20--60%): away-side yield suppressed in central events, consistent with longer path length through the medium. Ratio approximately constant in $\xi$, with positive slope in trigger $p_T$.
+A ratio of the per-trigger $\pi^0 - h$ yield in central to mid-central Au+Au collisions reveals a significant suppression of the away-side hadron yield. Integrated away-side yields, when plotted as a function of $\xi$, appear to lie along an exponential curve that is common to all trigger transverse momentum. Evidently the distribution of the away-side particle's fractional momentum ($p_{Th}/p_{Tt}$) is largely independent of the trigger's total momentum ($p_{Tt}$).
+
+The ratio of central (0--20%) to mid-central (20--60%) integrated away-side yields allows for the observation of possible medium effects. In all $\xi$ bins a significant suppression of the away-side yield in central events is observed. A linear fit suggests a near constant effect in $\xi$. Plotted as a function of $p_{Tt}$, a seemingly constant suppression is again observed. A linear fit reveals a positive slope of some significance. The away-side yields of higher momentum trigger particles seem to be slightly less affected by the medium.
 
 <!-- TODO: Add figure — Central vs mid-central away-side comparison -->
 
 ### In vs Out-of-Plane
 
-Positive away-side $v_2$ for all $\xi$ bins: in-plane hadrons (shorter path) enhanced relative to out-of-plane (longer path). Effect decreases at higher trigger $p_T$.
+A measure of the away-side $v_2$ provides additional evidence of a path length dependent partonic energy loss. Positive away-side $v_2$ for all $\xi$ bins: in-plane hadrons (shorter path through the medium) enhanced relative to out-of-plane (longer path). Effect decreases at higher trigger $p_T$.
 
 <!-- TODO: Add figure — In vs out-of-plane away-side comparison -->
 
 ### Direct Photon-Hadron
 
-Central-to-mid-central ratio approximately constant as a function of trigger $p_T$ and $\xi$. Away-side $v_2$ hints at nonzero value.
+Direct photon - hadron correlations are explored. To obtain the direct photon signal, a tagging method which removes contributions from decays is implemented. Statistical limitations implored us to develop the hybrid method. By leaning on the plentiful samples of inclusive photons and neutral pions, we are able to uncover a significant suppression of the direct photon triggered hadron yield. The reaction plane dependence is examined, where a nonzero value of the away-side hadron $v_2$ is discovered.
+
+The ratio of central to mid-central integrated away-side yields for direct photon triggers reveals an approximately constant suppression as a function of trigger $p_T$ and associated hadron $\xi$. This is in contrast to the recent $I_{AA}$ measurement which shows an enhancement at lower momenta. It must though be noted that nuclear effects, to which an $I_{AA}$ measurement might be sensitive, may cancel in our ratio of per-trigger yields from central and mid-central A+A collisions.
+
+Interestingly the suppression experienced in central Au+Au collisions by hadrons tagged by direct photons and neutral pions is roughly the same. Naively one would expect a greater suppression of per-trigger $\pi^0 - h$ away side yields due to the pion's surface bias and away-side jet's tendency to be gluonic. A direct photon has no such bias, and its away-side jet is more likely to have been spawned by a quark, which interact less strongly with the quark-gluon plasma.
 
 <!-- TODO: Add figure — Direct photon-hadron results -->
 
@@ -224,9 +258,3 @@ macros/                       ROOT/C++ analysis and plotting
   getFlow.C                   Flow background isolation
   draw*.C                     Publication-quality figures
 ```
-
-## References
-
-- PHENIX Collaboration, PPG210 (direct photons in Au+Au)
-- Sickles et al., Phys. Lett. B 693 (2010) 112
-- PHENIX Collaboration, PPG023 (charged multiplicity)
