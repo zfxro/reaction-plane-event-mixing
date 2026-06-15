@@ -2,13 +2,11 @@
 
 **A self-contained statistical method for extracting signals from noisy, correlated data** — developed for jet tomography of the quark-gluon plasma at RHIC, but the technique generalizes to any setting where the background structure is not independently measurable.
 
-[The Problem](#the-problem) | [The Method](#the-method) | [Full Derivation](#full-derivation) | [Code](#code-structure) | [Thesis](#thesis)
-
 ---
 
 ## The Problem
 
-You want to measure correlations between particles emerging from a high-energy heavy ion collision. The signal you care about is an order of magnitude smaller than the background (from collective flow), and the background has the **same angular structure** as the signal. You can't fit it out. You can't measure it independently. Standard approaches rely on external reference data or ad-hoc assumptions.
+You want to measure correlations between particles emerging from a high-energy heavy ion collision. The signal of interest is an order of magnitude smaller than the background (from collective flow), and the background has the **same angular structure** as the signal. You can't fit it out. You can't measure it independently. Standard approaches rely on external reference data or ad-hoc assumptions.
 
 **This framework measures and removes the entire background using only the data itself** — with no external inputs, no calibration runs, and no free parameters.
 
@@ -26,21 +24,14 @@ Pair triggers with hadrons from events having the *same reaction-plane orientati
 
 Constrain triggers to align with or against the reaction plane. The difference isolates cross terms: `Y_mix^ψ+ − Y_mix^ψ− = 8 ⟨a_h⟩⟨b_t σ⟩ + 8 ⟨a_t⟩⟨b_h σ⟩ cos(2Δφ)`. Two more corrections (κ_th, κ_ht) close the system.
 
-<p align="center">
-  <img src="figures/dphi_pi0_ptt0_sumcent1_dpsi0_xi0_a.png" width="32%" />
-  <img src="figures/dphi_pi0_ptt0_sumcent1_dpsi0_xi0_b.png" width="32%" />
-  <img src="figures/dphi_pi0_ptt0_sumcent1_dpsi0_xi0_c.png" width="32%" />
-</p>
-**Figure:** Background subtraction in action (π⁰–h, 20–60% centrality). Left: raw same-event data with flat background overlaid. Center: after flat subtraction, cosine background overlaid. Right: final cleaned correlation.
-
 ### The Four κ Corrections
 
-| Factor | Corrects For | Formula | Typical Size |
-|--------|-------------|---------|-------------|
-| κₐ | Multiplicity bias in flat term | ⟨a_t a_h⟩ / ⟨a_t⟩⟨a_h⟩ | 1–5% |
-| κ_b | Resolution damping in cosine term | ⟨b_t b_h⟩⟨σ⟩² / ⟨b_t σ⟩⟨b_h σ⟩ | 1–3% |
-| κ_th | Cross-term mismatch (t→h) | ⟨a_t b_h σ⟩ / ⟨a_t⟩⟨b_h σ⟩ | ~2% |
-| κ_ht | Cross-term mismatch (h→t) | ⟨a_h b_t σ⟩ / ⟨a_h⟩⟨b_t σ⟩ | ~2% |
+| Factor | Corrects For | Formula |
+|--------|-------------|---------|
+| κₐ | Multiplicity bias in flat term | ⟨a_t a_h⟩ / ⟨a_t⟩⟨a_h⟩ |
+| κ_b | Resolution damping in cosine term | ⟨b_t b_h⟩⟨σ⟩² / ⟨b_t σ⟩⟨b_h σ⟩ |
+| κ_th | Cross-term mismatch (t→h) | ⟨a_t b_h σ⟩ / ⟨a_t⟩⟨b_h σ⟩ |
+| κ_ht | Cross-term mismatch (h→t) | ⟨a_h b_t σ⟩ / ⟨a_h⟩⟨b_t σ⟩ |
 
 Uncertainties propagated via 1000-trial Monte Carlo pseudo-experiments.
 
@@ -58,19 +49,12 @@ f_i(φ_i, ψ_{2i}) = a_i + b_i cos(2(φ_i − ψ_{2i}))
 
 i ∈ {trigger t, hadron h}. Coefficients a_i, b_i depend on centrality (N_part) and p_T. Elliptic flow v_{2i} = b_i / 2a_i. Higher harmonics (n > 2) are either analytically eliminated or negligible.
 
-Integrating over all angles gives the mean count per event:
-
-```
-∫ dφ_i · (1/π) ∫ dψ_{2i} f_i = n_i = 2π a_i
-```
-
 ### 2. Same-Event Pair Background
 
 The trigger–hadron Δφ = φ_t − φ_h distribution in the same event is the product of single-particle distributions with the same-event constraint δ(ψ_{2h}−ψ_{2t}):
 
 ```
-F_th(Δφ) = ∫ dφ_t ∫ (dψ_{2t}/π) f_t · ∫ dφ_h ∫ dψ_{2h} δ(ψ_{2h}−ψ_{2t}) δ(Δφ−φ_t+φ_h) f_h
-         = 4π a_t a_h + 2π b_t b_h cos(2Δφ)
+F_th(Δφ) = 4π a_t a_h + 2π b_t b_h cos(2Δφ)
 ```
 
 This is the **exact background**. First term isotropic; second oscillatory. Averaging over N_part:
@@ -95,7 +79,7 @@ This equals the flat term of F_th **only if** ⟨a_t a_h⟩ = ⟨a_t⟩⟨a_h⟩
 κ_a = ⟨a_t a_h⟩ / ⟨a_t⟩⟨a_h⟩
 ```
 
-Compute by estimating a_t(N_part) and a_h(N_part): plot per-centrality ⟨a_i⟩ vs ⟨N_part⟩, interpolate with cubic spline, integrate over h(N_part). Typical κₐ = 1.01–1.05, largest in peripheral collisions where N_part distributions are most asymmetric.
+Compute by estimating a_t(N_part) and a_h(N_part): plot per-centrality ⟨a_i⟩ vs ⟨N_part⟩, interpolate with cubic spline, integrate over h(N_part). Typical κₐ = 1.01–1.05.
 
 After flat subtraction: `F_th − κ_a E_th = 2π ⟨b_t b_h⟩ cos(2Δφ)` — only the cosine term remains.
 
@@ -113,31 +97,29 @@ Convolving damps the flow coefficient by the resolution σ = exp(−2ω²):
 f_i* = ∫ g(ψ₂−ψ₂*) f_i dψ₂ = a_i + σ b_i cos(2(φ_i − ψ₂*))
 ```
 
-The resolution σ is measured from the correlation between independent sub-detectors (north/south FVTX): σ = √⟨cos(2(ψ_N−ψ_S))⟩.
+σ is measured from the correlation between independent sub-detectors: σ = √⟨cos(2(ψ_N−ψ_S))⟩.
 
 ### 5. Reaction-Plane Binned Mixing — Measuring the Cosine Term
 
 Mix triggers with hadrons whose measured ψ₂* is within ε of the trigger's. Restricting ψ_{2h}* to [ψ_{2t}*−ε, ψ_{2t}*+ε] preserves the flow correlation:
 
 ```
-E_th^ψ = 4π ⟨a_t⟩⟨a_h⟩ + 2π · (sin(2ε)/2ε) · ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
+E_th^ψ = 4π ⟨a_t⟩⟨a_h⟩ + 2π ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
 ```
 
-With ε = π/80, sin(2ε)/2ε ≈ 1. Subtracting the unmixed result:
+(With ε = π/80, sin(2ε)/2ε ≈ 1.) Subtracting the unmixed result:
 
 ```
 E_th^ψ − E_th = 2π ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
 ```
 
-But ⟨b_t b_h⟩ ≠ ⟨σ b_t⟩⟨σ b_h⟩ / ⟨σ⟩² — σ correlates with b, so the product of averages differs from the average of the product.
+But ⟨b_t b_h⟩ ≠ ⟨σ b_t⟩⟨σ b_h⟩ / ⟨σ⟩² — σ correlates with b.
 
 **Correction κ_b:**
 
 ```
 κ_b = ⟨b_t b_h⟩ ⟨σ⟩² / ⟨σ b_t⟩⟨σ b_h⟩
 ```
-
-⟨σ b_t⟩ and ⟨σ b_h⟩ are extracted from E_th^ψ and the in/out-of-plane cross terms. b_i(N_part) is estimated by ⟨b_i⟩ ≈ ⟨σ b_i⟩/⟨σ⟩ (valid because σ varies weakly within a centrality bin), then spline-interpolated as in κₐ.
 
 ### 6. In/Out-of-Plane Backgrounds
 
@@ -147,11 +129,10 @@ Restrict triggers to those aligned with (in-plane) or perpendicular to (out-of-p
 ψ_{2±}*(φ_t) = φ_t + α ± π/4,   α ∈ {0 (in), π/2 (out)}
 ```
 
-The same-event backgrounds with these limits:
+The same-event backgrounds:
 
 ```
-F_th^± = 2π ⟨a_t a_h⟩ ± 4 ⟨a_h b_t σ⟩
-       + (π ⟨b_t b_h⟩ ± 4 ⟨a_t b_h σ⟩) cos(2Δφ)
+F_th^± = 2π ⟨a_t a_h⟩ ± 4 ⟨a_h b_t σ⟩ + (π ⟨b_t b_h⟩ ± 4 ⟨a_t b_h σ⟩) cos(2Δφ)
 ```
 
 ### 7. In/Out-of-Plane Event Mixing
@@ -159,8 +140,7 @@ F_th^± = 2π ⟨a_t a_h⟩ ± 4 ⟨a_h b_t σ⟩
 Repeat RP-binned mixing with these limits:
 
 ```
-E_th^{ψ±} = 2π ⟨a_t⟩⟨a_h⟩ ± 4 ⟨a_h⟩⟨b_t σ⟩ ± 4 ⟨a_t⟩⟨b_h σ⟩ cos(2Δφ)
-          + π ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
+E_th^{ψ±} = 2π ⟨a_t⟩⟨a_h⟩ ± 4 ⟨a_h⟩⟨b_t σ⟩ ± 4 ⟨a_t⟩⟨b_h σ⟩ cos(2Δφ) + π ⟨σ b_t⟩⟨σ b_h⟩ cos(2Δφ)
 ```
 
 The difference isolates the cross terms:
@@ -175,23 +155,7 @@ Two more corrections:
 κ_{th} = ⟨a_t b_h σ⟩ / ⟨a_t⟩⟨b_h σ⟩,   κ_{ht} = ⟨a_h b_t σ⟩ / ⟨a_h⟩⟨b_t σ⟩
 ```
 
-### 8. Measured Background Components
-
-The four background terms are extracted directly from the mixing data:
-
-<p align="center">
-  <img src="figures/agah4pi_adj0_pi0_ptt0.png" width="45%" />
-  <img src="figures/ahbgs8_adj0_pi0_ptt0.png" width="45%" />
-</p>
-<p align="center">
-  <img src="figures/bgsbhs2pi_adj0_pi0_ptt0.png" width="45%" />
-  <img src="figures/agbhs8_adj0_pi0_ptt0.png" width="45%" />
-</p>
-**Figure:** Measured background components for π⁰ (5 < p_T < 7 GeV) − h. Top left: flat term 4π⟨a_t a_h⟩. Top right: cross term 8⟨a_h b_t σ⟩. Bottom left: cosine term 2π⟨b_t b_h σ²⟩. Bottom right: cross term 8⟨a_t b_h σ⟩. Each panel shows the actual data measurement with fit.
-
-The individual components ⟨a_t⟩, ⟨a_h⟩, ⟨b_t σ⟩, ⟨b_h σ⟩ are extracted from these four measured terms and used to compute the κ corrections.
-
-### 9. Corrected Backgrounds
+### 8. Corrected Backgrounds
 
 All four κ corrections applied:
 
@@ -208,7 +172,7 @@ F_th^{±*} = 2π κ_a ⟨a_t⟩⟨a_h⟩ ± 4 κ_{ht} ⟨a_h⟩⟨b_t σ⟩
           + (π κ_b ⟨σ b_t⟩⟨σ b_h⟩ / ⟨σ⟩² ± 4 κ_{th} ⟨a_t⟩⟨b_h σ⟩) cos(2Δφ)
 ```
 
-### 10. Final Subtraction
+### 9. Final Subtraction
 
 The per-trigger yield, corrected for detector acceptance A(Δφ):
 
@@ -218,9 +182,47 @@ Y(Δφ) = [Y_same(Δφ) − κ_a Y_mix(Δφ) − κ_b (Y_mix^ψ − Y_mix) cos(2
 
 For in/out-of-plane, the ± cross terms are additionally removed using κ_{th} and κ_{ht}.
 
-### 11. Triangular Flow Elimination
+### 10. Triangular Flow Elimination
 
-Expanding to include v₃: `f_i = a_i + b_2i cos(2Δφ_i) + b_3i cos(3Δφ_i)`. The pair distribution acquires a cos(3Δφ) term. By choosing away-side integration limits |Δφ − π| < π/3, the v₃ contribution vanishes identically — no measurement, no model, no assumption. Just the geometry of the integral.
+Expanding to include v₃: `f_i = a_i + b_2i cos(2Δφ_i) + b_3i cos(3Δφ_i)`. The pair distribution acquires a cos(3Δφ) term. By choosing away-side integration limits |Δφ − π| < π/3, the v₃ contribution vanishes identically — no measurement, no model, no assumption.
+
+---
+
+## Subtraction in Action
+
+### All-Plane
+
+Raw same-event data (a) → after flat background subtraction (b) → final cleaned correlation (c):
+
+<p align="center">
+  <img src="figures/allplane_a.png" width="30%" />
+  <img src="figures/allplane_b.png" width="30%" />
+  <img src="figures/allplane_c.png" width="30%" />
+</p>
+
+### In-Plane
+
+Five-step subtraction for triggers aligned with the reaction plane:
+
+<p align="center">
+  <img src="figures/inplane_a.png" width="18%" />
+  <img src="figures/inplane_b.png" width="18%" />
+  <img src="figures/inplane_c.png" width="18%" />
+  <img src="figures/inplane_d.png" width="18%" />
+  <img src="figures/inplane_e.png" width="18%" />
+</p>
+
+### Out-of-Plane
+
+Five-step subtraction for triggers perpendicular to the reaction plane:
+
+<p align="center">
+  <img src="figures/outplane_a.png" width="18%" />
+  <img src="figures/outplane_b.png" width="18%" />
+  <img src="figures/outplane_c.png" width="18%" />
+  <img src="figures/outplane_d.png" width="18%" />
+  <img src="figures/outplane_e.png" width="18%" />
+</p>
 
 ---
 
@@ -245,7 +247,7 @@ macros/                       ~70 ROOT/C++ analysis and plotting macros
   draw*.C                     Publication figures
 ```
 
-C++17 with ROOT. Processed ~20B minimum-bias Au+Au events over the grid (PROOF). Events are compressed offline for flexible cross-event mixing across the full data-taking period (~4 months, 2014).
+C++17 with ROOT. Processed ~20B minimum-bias Au+Au events over the grid (PROOF). Events are compressed offline for flexible cross-event mixing.
 
 ---
 
